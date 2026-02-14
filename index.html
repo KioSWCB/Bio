@@ -86,8 +86,8 @@
         #111 calc(var(--stripe-size)/2),
         #111 var(--stripe-size)
       );
-      backface-visibility:hidden;
-      will-change:transform;
+      transform: translateZ(0); 
+      will-change: transform;
     }
 
     .bg::after,
@@ -100,6 +100,8 @@
       backface-visibility:hidden;
       will-change:transform,opacity,background-position;
       z-index:0;
+      transform: translateZ(0);
+      will-change: transform, opacity, background-position;
     }
 
     .bg::after{
@@ -119,7 +121,7 @@
 
     @keyframes wave-vert{
       0%   { transform: translate3d(0, 0, 0) scaleY(1); }
-      40%  { transform: translate3d(0,-34px,0) scaleY(1.12); }
+      40%  { transform: translate3d(0,-34px,0) scaleY(1.6); }
       60%  { transform: translate3d(0,-28px,0) scaleY(1.08); }
       100% { transform: translate3d(0, 0, 0) scaleY(1); }
     }
@@ -227,7 +229,7 @@
       visibility: visible;
       transform: translateX(-50%) translateY(0);
     }
-    
+
     .check-icon {
       width: 20px; 
       height: 20px;
@@ -242,11 +244,21 @@
     @media (max-width:720px){
       .profile-card{ width:92vw; height:auto; }
       .actions-card{ width:90vw; }
+      .bg::before {
+        filter: none !important;
+        opacity: 0.2 !important;
+      }
+      .bg::after {
+        animation: wave-vert var(--wave-time-main) ease-in-out infinite !important;
+      }
+      .bg::before {
+        animation: wave-vert-soft var(--wave-time-soft) ease-in-out infinite !important;
+      }
     }
 
     @media (max-width:420px){
       .profile-card{ padding:18px; width:88vw; }
-      .light{ right:-12vmax; bottom:-12vmax; width:60vmax; height:60vmax; filter:blur(48px); }
+      .light{ right:-12vmax; bottom:-12vmax; width:60vmax; height:60vmax; filter:blur(20px); }
       .actions-card{ padding:12px; }
       #copy-notification { width: 85%; justify-content: center; }
     }
@@ -288,7 +300,7 @@
           <p class="profile-subtext">17 лет</p> <!-- Сколько лет -->
           </div>
         </div>
-        <p class="profile-bio">Привет и добро пожаловать на мою страницу)<br>Что тут вообще писать?</p> <!-- Основной текст -->
+        <p class="profile-bio">Привет и добро пожаловать на мою страницу)<br>Что тут вообще писать?<br><br>Рил, помогите придумать...</p> <!-- Основной текст -->
       <div style="flex:1 1 auto; display:flex; align-items:flex-end; justify-content:flex-start;">
       </div>
     </div>
@@ -315,12 +327,12 @@
           <span class="logo" aria-hidden="true"><img src="Roblox_logo500x500.png" alt="Роблокс"></span>
           <span class="text">Roblox</span>
         </a>
-<!-- - -->
+<!-- ------ -->
       </div>
     </div>
   </div>
   <script>
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function() { // Загрузка
       const preloader = document.getElementById('preloader');
       document.body.classList.add('loaded');
       preloader.style.opacity = '0';
@@ -328,7 +340,8 @@
       setTimeout(function(){
         preloader.style.display = 'none';
       }, 500);
-      const discordBtn = document.getElementById('discord-copy-btn');
+
+      const discordBtn = document.getElementById('discord-copy-btn'); // Кнопка дискорда
       const notification = document.getElementById('copy-notification');
       let timeoutId;
       discordBtn.addEventListener('click', function(e) {
@@ -344,8 +357,35 @@
           alert('Не удалось скопировать.');
         });
       });
+
+      const titles = ["Kio", "Hello world"]; 
+      let currentTitleIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      function updateTitle() {
+        const fullText = titles[currentTitleIndex];
+        const nextTitle = isDeleting 
+          ? fullText.substring(0, charIndex - 1) 
+          : fullText.substring(0, charIndex + 1);
+        document.title = nextTitle || "\u200E \u200E";
+        charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+        let speed = isDeleting ? 100 : 200; // Скорость печати/стирания
+        if (!isDeleting && charIndex === fullText.length) {
+          isDeleting = true;
+          speed = 10000; // Пауза после полной печати
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+          speed = 500; // Пауза после стирания
+        }
+        setTimeout(updateTitle, speed);
+      }
+      updateTitle();
     });
   </script>
 </body>
 </html>
 
+<!-- 98,185,251 -->
+<!-- 80,156,248 -->
+<!-- 125,106,243 -->
