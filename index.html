@@ -358,26 +358,31 @@
         });
       });
 
-      const titles = ["Kio", "Hello world"]; 
+      const titles = ["Kio", "Hello world"]; // Изменение title
       let currentTitleIndex = 0;
       let charIndex = 0;
       let isDeleting = false;
       function updateTitle() {
         const fullText = titles[currentTitleIndex];
-        const nextTitle = isDeleting 
-          ? fullText.substring(0, charIndex - 1) 
-          : fullText.substring(0, charIndex + 1);
-        document.title = nextTitle || "\u200E \u200E";
-        charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
-        let speed = isDeleting ? 100 : 200; // Скорость печати/стирания
-        if (!isDeleting && charIndex === fullText.length) {
-          isDeleting = true;
-          speed = 10000; // Пауза после полной печати
-        } else if (isDeleting && charIndex === 0) {
+        if (isDeleting && charIndex === 0) {
           isDeleting = false;
           currentTitleIndex = (currentTitleIndex + 1) % titles.length;
-          speed = 500; // Пауза после стирания
+          charIndex = 1;
         }
+        const currentWord = titles[currentTitleIndex];
+        const displayTitle = currentWord.substring(0, charIndex);
+        document.title = displayTitle || currentWord[0] || ".";
+        if (!isDeleting) {
+          charIndex++;
+          if (charIndex > currentWord.length) {
+            isDeleting = true;
+            setTimeout(updateTitle, 10000); // Пауза после полной печати
+            return;
+          }
+        } else {
+          charIndex--;
+        }
+        let speed = isDeleting ? 100 : 200; // Скорость печати/стирания
         setTimeout(updateTitle, speed);
       }
       updateTitle();
