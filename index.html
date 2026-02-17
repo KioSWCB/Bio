@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
@@ -439,7 +439,7 @@
         </button>
         <div class="volume-row">
           <svg class="music-icon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-          <input type="range" class="volume-slider" id="volume-slider" max="100" value="20"> <!-- Отображение ползунка громкости -->
+          <input type="range" class="volume-slider" id="volume-slider" max="100" value="20"> <!-- Ползунок громкости -->
         </div>
       </div>
     </div>
@@ -450,14 +450,14 @@
     <div class="profile-card" role="region" aria-label="profile">
       <div class="profile-header">
         <label class="profile-avatar" aria-hidden="true">
-          <img src="Avatar_round.png" alt="Аватар"> <!-- Аватар -->
+          <img src="Avatar_round.png" alt="Аватар">
         </label>
         <div style="display:flex;flex-direction:column;flex:1;">
-          <h2 class="profile-name">Kio</h2> <!-- Ник -->
-          <p class="profile-subtext">17 лет</p> <!-- Сколько лет -->
+          <h2 class="profile-name">Kio</h2>
+          <p class="profile-subtext">17 лет</p>
           </div>
         </div>
-        <p class="profile-bio">Привет и добро пожаловать на мою страницу)<br>Что тут вообще писать?<br><br>Рил, помогите придумать...</p> <!-- Основной текст -->
+        <p class="profile-bio">Привет и добро пожаловать на мою страницу)<br>Что тут вообще писать?<br><br>Рил, помогите придумать...</p>
       <div style="flex:1 1 auto; display:flex; align-items:flex-end; justify-content:flex-start;">
       </div>
     </div>
@@ -649,7 +649,6 @@
       document.addEventListener('click', function(event) {
         const isClickInsidePanel = panel.contains(event.target);
         const isClickOnToggleBtn = toggleBtn.contains(event.target);
-
         if (!isClickInsidePanel && !isClickOnToggleBtn) {
           panel.classList.remove('active');
         }
