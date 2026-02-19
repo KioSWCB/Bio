@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <title>Kio</title>
   <link rel="icon" type="png" href="Avatar_round.png">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -506,7 +506,7 @@
       let timeoutId;
       discordBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        navigator.clipboard.writeText('kioswcb').then(function() {
+        navigator.clipboard.writeText('kioswcb').then(function() { // Юзер дискорда
           notification.classList.add('show');
           if (timeoutId) clearTimeout(timeoutId);
           timeoutId = setTimeout(function() {
@@ -518,7 +518,7 @@
         });
       });
 
-      const titles = ["Kio", "Hello world!"]; // Изменение title
+      const titles = ["Kio", "Hello world!", "Kio", "Код говно", "Oik", "Kio", "Hello, world!", "Kio", "Лог, топ", "Kio", "Sosiska in Python", "OOOOOOOOOOOOOOOOOOOO"]; // Изменение title
       let currentTitleIndex = 0;
       let charIndex = titles[0].length;
       let isDeleting = true;
