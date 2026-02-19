@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>Kio</title>
   <link rel="icon" type="png" href="Avatar_round.png">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -68,7 +68,7 @@
       line-height: 1.45;
       letter-spacing: normal;
       text-transform: none;
-}
+    }
 
     .spinner {
       width: 40px;
@@ -100,7 +100,7 @@
       font-family:"Inter","Segoe UI",system-ui,sans-serif;
       background:var(--bg-dark);
       color:#f2f2f2;
-      overflow:hidden;
+      overflow-x: hidden; overflow-y: auto;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       padding:40px 20px;
@@ -489,15 +489,16 @@
     </div>
   </div>
   <script>
-    window.addEventListener('load', function() { // Загрузка
-      const preloader = document.getElementById('preloader');
+    window.addEventListener('load', function() {
+
+      const preloader = document.getElementById('preloader'); // Загрузка
       const startOverlay = document.getElementById('start-overlay');
+      startOverlay.classList.add('visible');
       setTimeout(function(){
         preloader.style.opacity = '0';
         preloader.style.visibility = 'hidden';
         setTimeout(function(){
             preloader.style.display = 'none';
-            startOverlay.classList.add('visible');
         }, 500);
       }, 500);
 
@@ -670,4 +671,3 @@
 <!-- 80,156,248 -->
 <!-- 125,106,243 -->
 <!-- 🤨🤨🤨🤨 -->
-
