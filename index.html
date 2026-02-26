@@ -533,7 +533,7 @@
   <script>
     window.addEventListener('load', function() {
 
-      const isSnowEnabled = true; // Вкл/Выкл. снега
+      const isSnowEnabled = false; // Вкл/Выкл. снега
 
       const preloader = document.getElementById('preloader'); // Загрузка
       const startOverlay = document.getElementById('start-overlay');
@@ -683,7 +683,7 @@
           iconPlay.classList.add('icon-hidden');
           iconPause.classList.remove('icon-hidden');
           iconPause.classList.add('icon-visible');
-        } else {
+        } else { // Светлая память моему коту Шишке
           iconPause.classList.remove('icon-visible');
           iconPause.classList.add('icon-hidden');
           iconPlay.classList.remove('icon-hidden');
