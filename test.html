@@ -465,14 +465,12 @@
       flex: 1;
     }
 	
-    body.is-mobile .bg::before {
-      filter: none !important;
-      opacity: 0.2 !important;
-      animation: wave-vert-soft var(--wave-time-soft) ease-in-out infinite !important;
-    }
-	
+    body.is-mobile .bg::before,
     body.is-mobile .bg::after {
-      animation: wave-vert var(--wave-time-main) ease-in-out infinite !important;
+      animation: none !important;
+      filter: none !important;
+      mix-blend-mode: normal !important;
+      opacity: 0.04 !important;
     }
 	
     body.is-mobile .music-container {
@@ -507,7 +505,7 @@
 	
     body.is-mobile .music-panel {
       flex-direction: row;
-      al    ign-items: center;
+      align-items: center;
       width: 220px;
       padding: 10px 14px;
     }
