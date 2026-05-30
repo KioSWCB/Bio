@@ -388,64 +388,133 @@
       .profile-card, .actions-card{ animation:none; opacity:1; transform:none; }
     }
 
-    @media (max-width:720px){
-      .profile-card{ width:92vw; height:auto; }
-      .actions-card{ width:90vw; }
-      .bg::before {
-        filter: none !important;
-        opacity: 0.2 !important;
-      }
-      .bg::after {
-        animation: wave-vert var(--wave-time-main) ease-in-out infinite !important;
-      }
-      .bg::before {
-        animation: wave-vert-soft var(--wave-time-soft) ease-in-out infinite !important;
-      }
-      .music-container { top: 20px; left: 20px; }
+    body.is-mobile .profile-card {
+      width: 92vw;
+      height: auto;
+      padding: 18px;
+      flex-direction: column;
+      align-items: center;
+      text-align: left;
+      gap: 12px;
     }
-
-    @media (max-width:420px){
-      .profile-card{ padding:18px; width:88vw; }
-      .light{ right:-12vmax; bottom:-12vmax; width:60vmax; height:60vmax; filter:blur(20px); }
-      .actions-card{ padding:12px; }
-      #copy-notification { width: 85%; justify-content: center; }
-      .volume-row {
-        display: none !important;
-      }
-      .track-controls {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 12px;
-      }
-      .music-panel {
-        flex-direction: row;
-        align-items: center;
-        width: 220px;
-        padding: 10px 14px;
-      }
-      .progress-container {
-        order: 2;
-        flex: 1;
-      }
-      .track-controls {
-        order: 1;
-      }
+	
+    body.is-mobile .profile-header {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
-
-    @media (max-width:480px) {
-      .profile-card{ width:92vw; height:auto; padding:18px; flex-direction:column; align-items:center; text-align:left; gap:12px; }
-      .profile-header{ flex-direction:column; align-items:center; gap:10px; }
-      .profile-avatar{ width:72px; height:72px; flex:0 0 72px; }
-      .profile-name{ font-size:1.4rem; margin:4px 0; }
-      .profile-subtext{ font-size:0.95rem; margin:0; }
-      .profile-bio{ font-size:0.98rem; margin-top:6px; line-height:1.45; }
-      .actions-card{ width:92vw; padding:12px; }
-      .profile-actions{ flex-direction:column; gap:10px; align-items:stretch; }
-      .action-btn{ min-width:unset; width:100%; font-size:1rem; padding:12px 14px; justify-content:flex-start; }
-      .action-btn .logo{ width:36px; height:36px; border-radius:50%; flex:0 0 36px; }
-      .action-btn .text{ margin-left:10px; text-align:left; flex:1; }
-      .light{ right:-12vmax; bottom:-12vmax; }
+	
+    body.is-mobile .profile-header > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+	
+    body.is-mobile .profile-avatar {
+      width: 72px;
+      height: 72px;
+      flex: 0 0 72px;
+    }
+	
+    body.is-mobile .profile-name {
+      font-size: 1.4rem;
+      margin: 4px 0;
+    }
+	
+    body.is-mobile .profile-subtext {
+      font-size: 0.95rem;
+      margin: 0;
+    }
+	
+    body.is-mobile .profile-bio {
+      font-size: 0.98rem;
+      margin-top: 6px;
+      line-height: 1.45;
+    }
+	
+    body.is-mobile .actions-card {
+      width: 92vw;
+      padding: 12px;
+    }
+	
+    body.is-mobile .profile-actions {
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+    }
+	
+    body.is-mobile .action-btn {
+      min-width: unset;
+      width: 100%;
+      font-size: 1rem;
+      padding: 12px 14px;
+      justify-content: flex-start;
+    }
+	
+    body.is-mobile .action-btn .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      flex: 0 0 36px;
+    }
+	
+    body.is-mobile .action-btn .text {
+      margin-left: 10px;
+      text-align: left;
+      flex: 1;
+    }
+	
+    body.is-mobile .bg::before {
+      filter: none !important;
+      opacity: 0.2 !important;
+      animation: wave-vert-soft var(--wave-time-soft) ease-in-out infinite !important;
+    }
+	
+    body.is-mobile .bg::after {
+      animation: wave-vert var(--wave-time-main) ease-in-out infinite !important;
+    }
+	
+    body.is-mobile .music-container {
+      top: 20px;
+      left: 20px;
+    }
+	
+    body.is-mobile .light {
+      right: -12vmax;
+      bottom: -12vmax;
+      width: 60vmax;
+      height: 60vmax;
+      filter: blur(20px);
+    }
+	
+    body.is-mobile #copy-notification {
+      width: 85%;
+      justify-content: center;
+    }
+	
+    body.is-mobile .volume-row {
+      display: none !important;
+    }
+	
+    body.is-mobile .track-controls {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      order: 1;
+    }
+	
+    body.is-mobile .music-panel {
+      flex-direction: row;
+      al    ign-items: center;
+      width: 220px;
+      padding: 10px 14px;
+    }
+	
+    body.is-mobile .progress-container {
+      order: 2;
+      flex: 1;
     }
   </style>
 </head>
@@ -454,7 +523,7 @@
     <div class="spinner"></div>
   </div>
   <div id="start-overlay">
-    <div class="start-text">Тестовая страница</div>
+    <div class="start-text">Нажмите для продолжения...</div>
   </div>
   <div id="copy-notification">
     <svg class="check-icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
@@ -475,7 +544,7 @@
         </button>
         <div class="volume-row">
           <svg class="music-icon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-          <input type="range" class="volume-slider" id="volume-slider" max="100" value="20"> <!-- Ползунок громкости -->
+          <input type="range" class="volume-slider" id="volume-slider" max="100" value="15"> <!-- Ползунок громкости -->
         </div>
       </div>
     </div>
@@ -491,10 +560,14 @@
         </label>
         <div style="display:flex;flex-direction:column;flex:1;">
           <h2 class="profile-name">Kio</h2>
-          <p class="profile-subtext">17 лет</p>
+          <p class="profile-subtext">Aka: KioSWCB, SWCB</p>
           </div>
         </div>
-        <p class="profile-bio">Привет и добро пожаловать на мою страницу)<br>Что тут вообще писать?<br><br>Рил, помогите придумать...</p>
+        <p class="profile-bio">
+          Привет и добро пожаловать на мою страницу)
+          <br>
+          Я не знаю, что тут написать, напишу только то что мне 17 лет и я из Беларуси (не Белоруссии).
+        </p>
       <div style="flex:1 1 auto; display:flex; align-items:flex-end; justify-content:flex-start;">
       </div>
     </div>
@@ -531,9 +604,18 @@
     </div>
   </div>
   <script>
+    (function() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua);
+      const isMobileData = (navigator.userAgentData && navigator.userAgentData.mobile);
+      if (isMobileUA || isMobileData) {
+        document.body.classList.add('is-mobile');
+      }
+    })();
+
     window.addEventListener('load', function() {
 
-      const isSnowEnabled = true; // Вкл/Выкл. снега
+      const isSnowEnabled = false; // Вкл/Выкл. снега
 
       const preloader = document.getElementById('preloader'); // Загрузка
       const startOverlay = document.getElementById('start-overlay');
@@ -550,7 +632,7 @@
         const snowContainer = document.getElementById('snow-container');
         if (!isSnowEnabled || !snowContainer) return;
         snowContainer.innerHTML = '';
-        const snowCount = window.innerWidth < 720 ? 40 : 100;
+        const snowCount = document.body.classList.contains('is-mobile') ? 40 : 100;
         for (let i = 0; i < snowCount; i++) {
           let flake = document.createElement('div');
           flake.className = 'snow-flake';
@@ -640,7 +722,7 @@
       const volumeSlider = document.getElementById('volume-slider');
       let isPlaying = false;
       let fadeInterval;
-      const targetVolume = 0.2; // Начальная громокость
+      const targetVolume = 0.15; // Начальная громокость
       audio.volume = 0;
       toggleBtn.addEventListener('click', () => {
         panel.classList.toggle('active');
@@ -683,7 +765,7 @@
           iconPlay.classList.add('icon-hidden');
           iconPause.classList.remove('icon-hidden');
           iconPause.classList.add('icon-visible');
-        } else {
+        } else { // Светлая память моему коту Шишке
           iconPause.classList.remove('icon-visible');
           iconPause.classList.add('icon-hidden');
           iconPlay.classList.remove('icon-hidden');
@@ -752,6 +834,4 @@
 <!-- 98,185,251 -->
 <!-- 80,156,248 -->
 <!-- 125,106,243 -->
-
 <!-- 🤨🤨🤨🤨 -->
-
