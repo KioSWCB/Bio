@@ -359,27 +359,35 @@
     }
 
     input[type=range] {
-      -webkit-appearance: none; background: transparent; width: 100%; cursor: pointer; display: block;
+      -webkit-appearance: none; background: transparent; width: 100%; cursor: pointer; display: block; margin: 0;
     }
     input[type=range]:focus { outline: none; }
     input[type=range]::-webkit-slider-runnable-track {
-      width: 100%; height: 4px; background: rgba(255,255,255,0.2);
-      border-radius: 2px;
+      width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px;
     }
     input[type=range]::-moz-range-track {
-      width: 100%; height: 4px; background: rgba(255,255,255,0.2);
-      border-radius: 2px;
+      width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px;
     }
     input[type=range]::-webkit-slider-thumb {
       height: 12px; width: 12px; border-radius: 50%; background: #fff;
-      -webkit-appearance: none; margin-top: -4px;
-      transition: transform 0.1s;
+      -webkit-appearance: none; margin-top: -4px; transition: transform 0.1s;
     }
-    input[type=range]:active::-webkit-slider-thumb {
-      transform: scale(1.3);
+    input[type=range]::-moz-range-thumb {
+      height: 12px; width: 12px; border-radius: 50%; background: #fff; border: none; transition: transform 0.1s;
     }
+    input[type=range]:active::-webkit-slider-thumb { transform: scale(1.3); }
+    input[type=range]:active::-moz-range-thumb { transform: scale(1.3); }
 
-    .progress-container { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+    #seek-slider { position: relative; z-index: 2; height: 24px; }
+    #seek-slider::-webkit-slider-runnable-track { background: transparent; height: 24px; }
+    #seek-slider::-moz-range-track { background: transparent; height: 24px; }
+    #seek-slider::-webkit-slider-thumb { margin-top: 6px; }
+
+    .progress-container { position: relative; display: flex; flex-direction: column; width: 100%; height: 24px; justify-content: center; }
+    #wave-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+    #wave-played { fill: none; stroke: rgba(255, 255, 255, 0.8); stroke-width: 4px; stroke-linecap: round; }
+    #wave-unplayed { stroke: rgba(255, 255, 255, 0.2); stroke-width: 4px; stroke-linecap: round; }
+
     .volume-row { display: flex; align-items: center; gap: 8px; }
     .volume-slider { width: 80px; }
 
@@ -397,53 +405,53 @@
       text-align: left;
       gap: 12px;
     }
-	
+
     body.is-mobile .profile-header {
       flex-direction: column;
       align-items: center;
       gap: 10px;
     }
-	
+
     body.is-mobile .profile-header > div {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
     }
-	
+
     body.is-mobile .profile-avatar {
       width: 72px;
       height: 72px;
       flex: 0 0 72px;
     }
-	
+
     body.is-mobile .profile-name {
       font-size: 1.4rem;
       margin: 4px 0;
     }
-	
+
     body.is-mobile .profile-subtext {
       font-size: 0.95rem;
       margin: 0;
     }
-	
+
     body.is-mobile .profile-bio {
       font-size: 0.98rem;
       margin-top: 6px;
       line-height: 1.45;
     }
-	
+
     body.is-mobile .actions-card {
       width: 92vw;
       padding: 12px;
     }
-	
+
     body.is-mobile .profile-actions {
       flex-direction: column;
       gap: 10px;
       align-items: stretch;
     }
-	
+
     body.is-mobile .action-btn {
       min-width: unset;
       width: 100%;
@@ -451,20 +459,20 @@
       padding: 12px 14px;
       justify-content: flex-start;
     }
-	
+
     body.is-mobile .action-btn .logo {
       width: 36px;
       height: 36px;
       border-radius: 50%;
       flex: 0 0 36px;
     }
-	
+
     body.is-mobile .action-btn .text {
       margin-left: 10px;
       text-align: left;
       flex: 1;
     }
-	
+
     body.is-mobile .bg::before,
     body.is-mobile .bg::after {
       animation: none !important;
@@ -472,12 +480,12 @@
       mix-blend-mode: normal !important;
       opacity: 0.04 !important;
     }
-	
+
     body.is-mobile .music-container {
       top: 20px;
       left: 20px;
     }
-	
+
     body.is-mobile .light {
       right: -12vmax;
       bottom: -12vmax;
@@ -485,16 +493,16 @@
       height: 60vmax;
       filter: blur(20px);
     }
-	
+
     body.is-mobile #copy-notification {
       width: 85%;
       justify-content: center;
     }
-	
+
     body.is-mobile .volume-row {
       display: none !important;
     }
-	
+
     body.is-mobile .track-controls {
       display: flex;
       flex-direction: row;
@@ -502,14 +510,14 @@
       gap: 12px;
       order: 1;
     }
-	
+
     body.is-mobile .music-panel {
       flex-direction: row;
       align-items: center;
       width: 220px;
       padding: 10px 14px;
     }
-	
+
     body.is-mobile .progress-container {
       order: 2;
       flex: 1;
@@ -533,6 +541,10 @@
     </button>
     <div class="music-panel" id="music-panel">
       <div class="progress-container">
+        <svg id="wave-svg" preserveAspectRatio="none">
+          <path id="wave-played"></path>
+          <line id="wave-unplayed"></line>
+        </svg>
         <input type="range" id="seek-slider" max="100" value="0">
       </div>
       <div class="track-controls">
@@ -824,6 +836,48 @@
           isPlaying = true;
           updatePlayIcon(true);
       });
+
+      const waveSvg = document.getElementById('wave-svg'); // Анимация волны в плеере
+      const wavePlayed = document.getElementById('wave-played');
+      const waveUnplayed = document.getElementById('wave-unplayed');
+      let waveAmp = 0;
+      let wavePhase = 0;
+	  
+      function animateWave() {
+        if (!audio.paused && waveAmp < 1) waveAmp += 0.05;
+        if (audio.paused && waveAmp > 0) waveAmp -= 0.05;
+        if (waveAmp < 0) waveAmp = 0;
+        if (waveAmp > 0) wavePhase -= 0.15;
+        const width = waveSvg.clientWidth || 228;
+        const height = waveSvg.clientHeight || 24;
+        const midY = height / 2;
+        const progress = (seekSlider.max && seekSlider.max > 0) ? seekSlider.value / seekSlider.max : 0;
+        const progressX = width * progress;
+        let d = "";
+        for (let x = 0; x <= progressX; x += 2) {
+          const distFromThumb = Math.max(0, progressX - x);
+          const fade = Math.min(1, distFromThumb / 12);
+          const y = midY + Math.sin(x * 0.12 + wavePhase) * 4 * waveAmp * fade;
+          
+          if (x === 0) {
+            d += `M ${x} ${y}`;
+          } else {
+            d += ` L ${x} ${y}`;
+          }
+        }
+        if (progressX > 0) {
+          d += ` L ${progressX} ${midY}`;
+        } else {
+          d = `M 0 ${midY}`;
+        }
+        wavePlayed.setAttribute('d', d);
+        waveUnplayed.setAttribute('x1', progressX);
+        waveUnplayed.setAttribute('y1', midY);
+        waveUnplayed.setAttribute('x2', width);
+        waveUnplayed.setAttribute('y2', midY);
+        requestAnimationFrame(animateWave);
+      }
+      animateWave();
     });
   </script>
 </body>
