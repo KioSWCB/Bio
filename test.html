@@ -363,10 +363,10 @@
     }
     input[type=range]:focus { outline: none; }
     input[type=range]::-webkit-slider-runnable-track {
-      width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px;
+      width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px;
     }
     input[type=range]::-moz-range-track {
-      width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px;
+      width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px;
     }
     input[type=range]::-webkit-slider-thumb {
       height: 12px; width: 12px; border-radius: 50%; background: #fff;
@@ -384,9 +384,9 @@
     #seek-slider::-webkit-slider-thumb { margin-top: 6px; }
 
     .progress-container { position: relative; display: flex; flex-direction: column; width: 100%; height: 24px; justify-content: center; }
-    #wave-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-    #wave-played { fill: none; stroke: rgba(255, 255, 255, 0.8); stroke-width: 4px; stroke-linecap: round; }
-    #wave-unplayed { stroke: rgba(255, 255, 255, 0.2); stroke-width: 4px; stroke-linecap: round; }
+    #wave-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: visible; }
+    #wave-played { fill: none; stroke: rgba(255, 255, 255, 0.8); stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round; }
+    #wave-unplayed { stroke: rgba(255, 255, 255, 0.2); stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round; }
 
     .volume-row { display: flex; align-items: center; gap: 8px; }
     .volume-slider { width: 80px; }
@@ -842,12 +842,16 @@
       const waveUnplayed = document.getElementById('wave-unplayed');
       let waveAmp = 0;
       let wavePhase = 0;
-	  
-      function animateWave() {
-        if (!audio.paused && waveAmp < 1) waveAmp += 0.05;
-        if (audio.paused && waveAmp > 0) waveAmp -= 0.05;
+      let lastTime = performance.now();
+      function animateWave(timestamp) {
+        if (!timestamp) timestamp = performance.now();
+        const dt = Math.min(3, (timestamp - lastTime) / 16.667);
+        lastTime = timestamp;
+        if (!audio.paused && waveAmp < 1) waveAmp += 0.05 * dt;
+        if (audio.paused && waveAmp > 0) waveAmp -= 0.05 * dt;
         if (waveAmp < 0) waveAmp = 0;
-        if (waveAmp > 0) wavePhase -= 0.15;
+        if (waveAmp > 1) waveAmp = 1;
+        if (waveAmp > 0) wavePhase -= 0.15 * dt;
         const width = waveSvg.clientWidth || 228;
         const height = waveSvg.clientHeight || 24;
         const midY = height / 2;
@@ -858,7 +862,6 @@
           const distFromThumb = Math.max(0, progressX - x);
           const fade = Math.min(1, distFromThumb / 12);
           const y = midY + Math.sin(x * 0.12 + wavePhase) * 4 * waveAmp * fade;
-          
           if (x === 0) {
             d += `M ${x} ${y}`;
           } else {
