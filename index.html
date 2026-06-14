@@ -4,6 +4,13 @@
   <meta charset="utf-8" />
   <title>Kio</title>
   <link rel="icon" type="image/png" href="Avatar_round.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PNS7R381T9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PNS7R381T9');
+  </script>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     :root {
@@ -444,6 +451,32 @@
       display: inline-block;
     }
 
+    .more-menu {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0 4px;
+      -webkit-overflow-scrolling: touch;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease, padding 0.4s ease, transform 0.4s ease;
+      margin-top: 0;
+      pointer-events: none;
+    }
+
+    .more-menu.show {
+      max-height: 250px;
+      opacity: 1;
+      transform: translateY(0);
+      margin-top: 4px;
+      pointer-events: auto;
+      padding: 6px 4px;
+    }
+
     #copy-notification {
       position: fixed;
       bottom: 30px;
@@ -835,6 +868,12 @@
       order: 2;
       flex: 1;
     }
+
+    body.is-mobile .more-menu {
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+    }
   </style>
 </head>
 <body>
@@ -904,36 +943,47 @@
       </p>
     </div>
     <div class="actions-card" role="region" aria-label="actions">
-      <div class="profile-actions" aria-hidden="false">
 <!-- Кнопки -->
-        <!-- Discord -->
-        <a class="action-btn discord-btn" href="#" id="discord-copy-btn" role="button" aria-label="Скопировать Discord">
+      <div class="profile-actions" aria-hidden="false">
+<!-- Discord -->
+        <a class="action-btn discord-btn" href="#" id="discord-copy-btn" role="button">
           <span class="logo" aria-hidden="true"><img src="Discord_logo500x500.png" alt="Discord"></span>
           <span class="text">Discord</span>
         </a>
-        <!-- Telegram -->
-        <a class="action-btn telegram-btn" href="https://t.me/Kio_SWCB/" role="button" aria-label="Открыть Telegram" rel="noopener noreferrer" target="_blank">
+<!-- Telegram -->
+        <a class="action-btn telegram-btn" href="https://t.me/Kio_SWCB/" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo" aria-hidden="true"><img src="Telegram_logo500x500.png" alt="Telegram"></span>
           <span class="text">Telegram</span>
         </a>
-        <!-- Steam -->
-        <a class="action-btn steam-btn" href="https://steamcommunity.com/id/KioSWCB/" role="button" aria-label="Открыть Steam" rel="noopener noreferrer" target="_blank">
+<!-- Steam -->
+        <a class="action-btn steam-btn" href="https://steamcommunity.com/id/KioSWCB/" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo" aria-hidden="true"><img src="Steam_logo500x500.png" alt="Steam"></span>
           <span class="text">Steam</span>
         </a>
-        <!-- NameMC -->
-        <a class="action-btn namemc-btn" href="https://ru.namemc.com/profile/KioSWCB" role="button" aria-label="Открыть NameMC" rel="noopener noreferrer" target="_blank">
+<!-- ------ -->
+        <a class="action-btn more-btn" href="#" id="more-btn" role="button">
+          <span class="logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" style="width: 100%; height: 100%; fill: #fff; padding: 4px; box-sizing: border-box;">
+              <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+            </svg>
+          </span>
+          <span class="text">Ещё</span>
+        </a>
+      </div>
+<!-- Кнопки в меню ещё -->
+      <div class="more-menu" id="more-menu">
+<!-- NameMC -->
+        <a class="action-btn namemc-btn" href="https://ru.namemc.com/profile/KioSWCB" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo" aria-hidden="true"><img src="NameMC_logo500x500.png" alt="NameMC"></span>
           <span class="text">NameMC</span>
         </a>
-        <!-- Roblox
-        <a class="action-btn roblox-btn" href="https://www.roblox.com/users/3421812576/profile" role="button" aria-label="Открыть Roblox" rel="noopener noreferrer" target="_blank">
+<!-- Roblox -->
+        <a class="action-btn roblox-btn" href="https://www.roblox.com/users/3421812576/profile" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo" aria-hidden="true"><img src="Roblox_logo500x500.png" alt="Roblox"></span>
           <span class="text">Roblox</span>
         </a>
-        -->
-        <!-- TikTok -->
-        <a class="action-btn tiktok-btn" href="https://www.tiktok.com/@kio_swcb" role="button" aria-label="Открыть TikTok" rel="noopener noreferrer" target="_blank">
+<!-- TikTok -->
+        <a class="action-btn tiktok-btn" href="https://www.tiktok.com/@kio_swcb" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo" aria-hidden="true"><img src="TikTok_logo500x500.png" alt="TikTok"></span>
           <span class="text">TikTok</span>
         </a>
@@ -1208,6 +1258,13 @@
         requestAnimationFrame(animateWave);
       }
       animateWave();
+
+      const moreBtn = document.getElementById('more-btn'); // Меню ещё
+      const moreMenu = document.getElementById('more-menu');
+      moreBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        moreMenu.classList.toggle('show');
+      });
     });
   </script>
 </body>
