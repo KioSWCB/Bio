@@ -741,6 +741,12 @@
       width: 80px;
     }
 
+    body.is-hidden .bg::after,
+    body.is-hidden .bg::before,
+    body.is-hidden .snow-flake {
+      animation-play-state: paused !important;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .bg::after,
       .bg::before {
@@ -906,7 +912,7 @@
     <span>Имя пользователя скопировано</span>
   </div>
   <div class="music-container">
-    <button class="music-btn" id="toggle-player" aria-label="Открыть плеер">
+    <button class="music-btn" id="toggle-player">
       <svg class="music-icon" viewBox="0 0 24 24">
         <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
       </svg>
@@ -938,13 +944,13 @@
     </div>
   </div>
   <audio id="bg-music" src="song.mp3" loop></audio>
-  <div class="bg" aria-hidden="true"></div>
-  <div class="light" aria-hidden="true"></div>
+  <div class="bg"></div>
+  <div class="light"></div>
   <div id="snow-container"></div>
   <div class="main-bio">
     <div class="profile-card" role="region" aria-label="profile">
       <div class="profile-header">
-        <label class="profile-avatar" aria-hidden="true">
+        <label class="profile-avatar">
           <img src="Avatar_round.png" alt="Avatar"><!-- Аватарка био -->
         </label>
         <div style="display: flex; flex-direction: column; flex: 1;">
@@ -959,24 +965,24 @@
       </p>
     </div>
     <div class="actions-card" role="region" aria-label="actions">
-      <div class="profile-actions" aria-hidden="false">
+      <div class="profile-actions">
 <!-- Discord -->
         <a class="action-btn discord-btn" href="#" id="discord-copy-btn" role="button">
-          <span class="logo" aria-hidden="true"><img src="Discord_logo500x500.png" alt="Discord"></span>
+          <span class="logo"><img src="Discord_logo500x500.png" alt="Discord"></span>
           <span class="text">Discord</span>
         </a>
 <!-- Telegram -->
         <a class="action-btn telegram-btn" href="https://t.me/Kio_SWCB/" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo" aria-hidden="true"><img src="Telegram_logo500x500.png" alt="Telegram"></span>
+          <span class="logo"><img src="Telegram_logo500x500.png" alt="Telegram"></span>
           <span class="text">Telegram</span>
         </a>
 <!-- Steam -->
         <a class="action-btn steam-btn" href="https://steamcommunity.com/id/KioSWCB/" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo" aria-hidden="true"><img src="Steam_logo500x500.png" alt="Steam"></span>
+          <span class="logo"><img src="Steam_logo500x500.png" alt="Steam"></span>
           <span class="text">Steam</span>
         </a>
         <a class="action-btn more-btn" id="more-btn" role="button">
-          <span class="logo" aria-hidden="true">
+          <span class="logo">
             <svg viewBox="0 0 24 24" style="width: 100%; height: 100%; fill: #fff; padding: 4px; box-sizing: border-box;">
               <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
             </svg>
@@ -987,21 +993,22 @@
       <div class="more-menu" id="more-menu">
 <!-- Roblox -->
         <a class="action-btn roblox-btn" href="https://www.roblox.com/users/3421812576/profile" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo" aria-hidden="true"><img src="Roblox_logo500x500.png" alt="Roblox"></span>
+          <span class="logo"><img src="Roblox_logo500x500.png" alt="Roblox"></span>
           <span class="text">Roblox</span>
         </a>
 <!-- NameMC -->
         <a class="action-btn namemc-btn" href="https://ru.namemc.com/profile/KioSWCB" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo" aria-hidden="true"><img src="NameMC_logo500x500.png" alt="NameMC"></span>
+          <span class="logo"><img src="NameMC_logo500x500.png" alt="NameMC"></span>
           <span class="text">NameMC</span>
         </a>
 <!-- Toyhouse -->
         <a class="action-btn toyhouse-btn" href="https://toyhou.se/KioSWCB" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo" aria-hidden="true"><img src="Toyhouse_logo500x500.png" alt="Toyhouse"></span>
+          <span class="logo"><img src="Toyhouse_logo500x500.png" alt="Toyhouse"></span>
           <span class="text">Toyhouse</span>
+        </a>
 <!-- TikTok -->
         <a class="action-btn tiktok-btn" href="https://www.tiktok.com/@kio_swcb" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo" aria-hidden="true"><img src="TikTok_logo500x500.png" alt="TikTok"></span>
+          <span class="logo"><img src="TikTok_logo500x500.png" alt="TikTok"></span>
           <span class="text">TikTok</span>
         </a>
       </div>
@@ -1019,7 +1026,24 @@
 
     window.addEventListener('load', function() {
 
-      const isSnowEnabled = false; // Вкл/Выкл. снега
+      const isSnowEnabled = false; // Вкл/Выкл снега
+
+      const userLang = navigator.language || navigator.userLanguage; // Перевод
+      if (!/^(ru|uk|be)/i.test(userLang)) {
+        document.documentElement.lang = "en";
+        document.querySelector('.start-text').textContent = "Click to continue...";
+        document.querySelector('.profile-bio').innerHTML = "Hello and welcome to my page)<br>I don't know what to write here, I'll just write that I'm 17 years old and I'm from Belarus.";
+        document.querySelector('#copy-notification span').textContent = "Username copied";
+        document.querySelector('#more-btn .text').textContent = "More";
+        const originalAlert = window.alert;
+        window.alert = function(msg) {
+          if (msg === 'Не удалось скопировать.') {
+            originalAlert('Failed to copy.');
+          } else {
+            originalAlert(msg);
+          }
+        };
+      }
 
       const preloader = document.getElementById('preloader'); // Загрузка
       const startOverlay = document.getElementById('start-overlay');
@@ -1031,6 +1055,13 @@
           preloader.style.display = 'none';
         }, 500);
       }, 500);
+
+      const moreBtn = document.getElementById('more-btn'); // Меню ещё
+      const moreMenu = document.getElementById('more-menu');
+      moreBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        moreMenu.classList.toggle('show');
+      });
 
       function createSnow() { // Снег
         const snowContainer = document.getElementById('snow-container');
@@ -1083,7 +1114,7 @@
           }, 2500);
         }).catch(function(err) {
           console.error('Ошибка копирования: ', err);
-          alert('Не удалось скопировать.');
+          alert('Не удалось скопировать');
         });
       });
 
@@ -1141,7 +1172,7 @@
           const playPromise = audio.play();
           if (playPromise !== undefined) {
             playPromise.catch(error => {
-              console.log("Автовосплей заблокирован или ожидает взаимодействия.");
+              console.log("Автовосплей заблокирован или ожидает взаимодействия");
               isPlaying = false;
               updatePlayIcon(false);
             });
@@ -1203,17 +1234,6 @@
           audio.currentTime = time;
         }
       });
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-          if (!audio.paused) {
-            fadeAudio(0); 
-          }
-        } else {
-          if (isPlaying) {
-            fadeAudio(volumeSlider.value / 100);
-          }
-        }
-      });
       document.addEventListener('click', function(event) {
         const isClickInsidePanel = panel.contains(event.target);
         const isClickOnToggleBtn = toggleBtn.contains(event.target);
@@ -1228,6 +1248,20 @@
         fadeAudio(targetVolume);
         isPlaying = true;
         updatePlayIcon(true);
+      });
+
+      document.addEventListener('visibilitychange', () => { // Остановка анимаций и музыки
+        if (document.hidden) {
+          document.body.classList.add('is-hidden');
+          if (!audio.paused) {
+            fadeAudio(0); 
+          }
+        } else {
+          document.body.classList.remove('is-hidden');
+          if (isPlaying) {
+            fadeAudio(volumeSlider.value / 100);
+          }
+        }
       });
 
       const waveSvg = document.getElementById('wave-svg'); // Анимация волны в плеере
@@ -1274,13 +1308,6 @@
         requestAnimationFrame(animateWave);
       }
       animateWave();
-
-      const moreBtn = document.getElementById('more-btn'); // Меню ещё
-      const moreMenu = document.getElementById('more-menu');
-      moreBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        moreMenu.classList.toggle('show');
-      });
     });
   </script>
 </body>
