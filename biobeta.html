@@ -30,13 +30,20 @@
       --actions-delay-offset: 0.6s;
     }
 
-    .icon-hidden { display: none !important; }
-    .icon-visible { display: block !important; }
+    .icon-hidden {
+      display: none !important;
+    }
+
+    .icon-visible {
+      display: block !important;
+    }
 
     #preloader {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: var(--bg-dark);
       z-index: 9999;
       display: flex;
@@ -54,8 +61,10 @@
 
     #start-overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(13, 13, 13, 0.8);
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
@@ -69,7 +78,10 @@
       transition: opacity 0.6s ease, visibility 0.6s;
     }
 
-    #start-overlay.visible { opacity: 1; visibility: visible; }
+    #start-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
 
     .start-text {
       font-family: "Rubik", "Segoe UI", system-ui, sans-serif;
@@ -80,14 +92,19 @@
     }
 
     .spinner {
-      width: 40px; height: 40px;
+      width: 40px;
+      height: 40px;
       border: 3px solid rgba(255, 255, 255, 0.1);
       border-top-color: #ffffff;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     .profile-card,
     .actions-card {
@@ -100,7 +117,11 @@
       animation-play-state: running !important;
     }
 
-    html, body { height: 100%; margin: 0; }
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
 
     body {
       min-height: 100vh;
@@ -130,7 +151,7 @@
 
     .bg {
       position: fixed;
-      inset: -50vmax; 
+      inset: -50vmax;
       z-index: -6;
       pointer-events: none;
       overflow: hidden;
@@ -174,31 +195,56 @@
     }
 
     @keyframes wave-vert {
-      0%   { transform: translate3d(0, 0, 0) scaleY(1); }
-      40%  { transform: translate3d(0, -34px, 0) scaleY(1.6); }
-      60%  { transform: translate3d(0, -28px, 0) scaleY(1.08); }
-      100% { transform: translate3d(0, 0, 0) scaleY(1); }
+      0% {
+        transform: translate3d(0, 0, 0) scaleY(1);
+      }
+      40% {
+        transform: translate3d(0, -34px, 0) scaleY(1.6);
+      }
+      60% {
+        transform: translate3d(0, -28px, 0) scaleY(1.08);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scaleY(1);
+      }
     }
 
     @keyframes wave-vert-soft {
-      0%   { transform: translate3d(0, 0, 0) scaleY(1); }
-      50%  { transform: translate3d(0, -20px, 0) scaleY(1.05); }
-      100% { transform: translate3d(0, 0, 0) scaleY(1); }
+      0% {
+        transform: translate3d(0, 0, 0) scaleY(1);
+      }
+      50% {
+        transform: translate3d(0, -20px, 0) scaleY(1.05);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scaleY(1);
+      }
     }
 
     @keyframes wave-drift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 60% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 60% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     @keyframes wave-drift-rev {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: -50% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: -50% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
-    /* --- БЫЛО aurora, СТАЛО glow --- */
     .glow {
       position: fixed;
       inset: -50vmax;
@@ -208,36 +254,54 @@
     }
 
     .glow-indigo {
-      background: radial-gradient(circle 40vmax at 35% 35%, rgba(99, 102, 241, 0.26), transparent 70%);
+      background: radial-gradient(circle 65vmax at 35% 35%, rgba(99, 102, 241, 0.26), transparent 70%);
       animation: drift-indigo 18s ease-in-out infinite alternate;
     }
 
     .glow-purple {
-      background: radial-gradient(circle 38vmax at 65% 55%, rgba(168, 85, 247, 0.22), transparent 70%);
+      background: radial-gradient(circle 60vmax at 65% 55%, rgba(168, 85, 247, 0.22), transparent 70%);
       animation: drift-purple 22s ease-in-out infinite alternate;
     }
 
     .glow-blue {
-      background: radial-gradient(circle 42vmax at 50% 75%, rgba(59, 130, 246, 0.18), transparent 70%);
+      background: radial-gradient(circle 70vmax at 50% 75%, rgba(59, 130, 246, 0.18), transparent 70%);
       animation: drift-blue 26s ease-in-out infinite alternate;
     }
 
     @keyframes drift-indigo {
-      0%   { transform: translate(-15%, -12%); }
-      50%  { transform: translate(5%, 8%); }
-      100% { transform: translate(20%, 18%); }
+      0% {
+        transform: translate(-15%, -12%);
+      }
+      50% {
+        transform: translate(5%, 8%);
+      }
+      100% {
+        transform: translate(20%, 18%);
+      }
     }
 
     @keyframes drift-purple {
-      0%   { transform: translate(20%, -10%); }
-      50%  { transform: translate(-3%, 12%); }
-      100% { transform: translate(-22%, 20%); }
+      0% {
+        transform: translate(20%, -10%);
+      }
+      50% {
+        transform: translate(-3%, 12%);
+      }
+      100% {
+        transform: translate(-22%, 20%);
+      }
     }
 
     @keyframes drift-blue {
-      0%   { transform: translate(-18%, 20%); }
-      50%  { transform: translate(10%, -5%); }
-      100% { transform: translate(22%, -18%); }
+      0% {
+        transform: translate(-18%, 20%);
+      }
+      50% {
+        transform: translate(10%, -5%);
+      }
+      100% {
+        transform: translate(22%, -18%);
+      }
     }
 
     .grain {
@@ -283,13 +347,18 @@
     }
 
     @keyframes fall {
-      0%   { transform: translate(var(--start-x), -20px) scale(var(--scale)); }
-      100% { transform: translate(var(--end-x), 100vh) scale(var(--scale)); }
+      0% {
+        transform: translate(var(--start-x), -20px) scale(var(--scale));
+      }
+      100% {
+        transform: translate(var(--end-x), 100vh) scale(var(--scale));
+      }
     }
 
     #snow-container {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
@@ -325,8 +394,14 @@
     }
 
     @keyframes cardEnter {
-      0%   { opacity: 0; transform: translateY(var(--card-offset)) scale(0.96); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
+      0% {
+        opacity: 0;
+        transform: translateY(var(--card-offset)) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .profile-header {
@@ -336,7 +411,8 @@
     }
 
     .profile-avatar {
-      width: 48px; height: 48px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       overflow: hidden;
       flex: 0 0 48px;
@@ -345,7 +421,8 @@
     }
 
     .profile-avatar img {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: block;
     }
@@ -399,8 +476,14 @@
     }
 
     @keyframes actionsEnter {
-      0%   { opacity: 0; transform: translateY(18px) scale(0.98); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
+      0% {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .profile-actions {
@@ -448,7 +531,8 @@
     }
 
     .action-btn .logo {
-      width: 24px; height: 24px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       overflow: hidden;
       flex: 0 0 24px;
@@ -457,12 +541,15 @@
     }
 
     .action-btn .logo img {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    .action-btn .text { display: inline-block; }
+    .action-btn .text {
+      display: inline-block;
+    }
 
     .more-menu {
       display: flex;
@@ -488,7 +575,9 @@
       padding: 6px 4px;
     }
 
-    .more-menu .action-btn { flex: 1 1 calc(25% - 6px); }
+    .more-menu .action-btn {
+      flex: 1 1 calc(25% - 6px);
+    }
 
     #copy-notification {
       position: fixed;
@@ -522,7 +611,11 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    .done-icon { width: 20px; height: 20px; fill: #4caf50; }
+    .done-icon {
+      width: 20px;
+      height: 20px;
+      fill: #4caf50;
+    }
 
     .music-container {
       position: fixed;
@@ -546,7 +639,8 @@
     }
 
     .music-btn {
-      width: 48px; height: 48px;
+      width: 48px;
+      height: 48px;
       border-radius: 14px;
       background: rgba(22, 22, 28, 0.6);
       backdrop-filter: blur(20px) saturate(160%);
@@ -566,7 +660,11 @@
       transform: scale(1.05);
     }
 
-    .music-icon { width: 24px; height: 24px; fill: currentColor; }
+    .music-icon {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
 
     .music-panel {
       width: 260px;
@@ -608,15 +706,19 @@
       cursor: pointer;
       color: #fff;
       padding: 0;
-      width: 24px; height: 24px;
+      width: 24px;
+      height: 24px;
       position: relative;
     }
 
-    .play-pause-btn:hover { color: #ccc; }
+    .play-pause-btn:hover {
+      color: #ccc;
+    }
 
     .play-pause-btn .music-icon {
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -629,22 +731,27 @@
       margin: 0;
     }
 
-    input[type=range]:focus { outline: none; }
+    input[type=range]:focus {
+      outline: none;
+    }
 
     input[type=range]::-webkit-slider-runnable-track {
-      width: 100%; height: 4px;
+      width: 100%;
+      height: 4px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 10px;
     }
 
     input[type=range]::-moz-range-track {
-      width: 100%; height: 4px;
+      width: 100%;
+      height: 4px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 10px;
     }
 
     input[type=range]::-webkit-slider-thumb {
-      height: 12px; width: 12px;
+      height: 12px;
+      width: 12px;
       border-radius: 50%;
       background: #fff;
       -webkit-appearance: none;
@@ -653,20 +760,41 @@
     }
 
     input[type=range]::-moz-range-thumb {
-      height: 12px; width: 12px;
+      height: 12px;
+      width: 12px;
       border-radius: 50%;
       background: #fff;
       border: none;
       transition: transform 0.1s;
     }
 
-    input[type=range]:active::-webkit-slider-thumb { transform: scale(1.3); }
-    input[type=range]:active::-moz-range-thumb     { transform: scale(1.3); }
+    input[type=range]:active::-webkit-slider-thumb {
+      transform: scale(1.3);
+    }
 
-    #seek-slider { position: relative; z-index: 2; height: 24px; }
-    #seek-slider::-webkit-slider-runnable-track { background: transparent; height: 24px; }
-    #seek-slider::-moz-range-track              { background: transparent; height: 24px; }
-    #seek-slider::-webkit-slider-thumb          { margin-top: 6px; }
+    input[type=range]:active::-moz-range-thumb {
+      transform: scale(1.3);
+    }
+
+    #seek-slider {
+      position: relative;
+      z-index: 2;
+      height: 24px;
+    }
+
+    #seek-slider::-webkit-slider-runnable-track {
+      background: transparent;
+      height: 24px;
+    }
+
+    #seek-slider::-moz-range-track {
+      background: transparent;
+      height: 24px;
+    }
+
+    #seek-slider::-webkit-slider-thumb {
+      margin-top: 6px;
+    }
 
     .progress-container {
       position: relative;
@@ -679,8 +807,10 @@
 
     #wave-svg {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: 1;
       overflow: visible;
@@ -707,7 +837,9 @@
       gap: 8px;
     }
 
-    .volume-slider { width: 80px; }
+    .volume-slider {
+      width: 80px;
+    }
 
     body.is-hidden .bg::after,
     body.is-hidden .bg::before,
@@ -751,12 +883,32 @@
       text-align: center;
     }
 
-    body.is-mobile .profile-avatar { width: 72px; height: 72px; flex: 0 0 72px; }
-    body.is-mobile .profile-name { font-size: 1.4rem; margin: 4px 0; }
-    body.is-mobile .profile-subtext { font-size: 0.95rem; margin: 0; }
-    body.is-mobile .profile-bio { font-size: 0.98rem; margin-top: 6px; line-height: 1.45; }
+    body.is-mobile .profile-avatar {
+      width: 72px;
+      height: 72px;
+      flex: 0 0 72px;
+    }
 
-    body.is-mobile .actions-card { width: 92vw; padding: 12px; }
+    body.is-mobile .profile-name {
+      font-size: 1.4rem;
+      margin: 4px 0;
+    }
+
+    body.is-mobile .profile-subtext {
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    body.is-mobile .profile-bio {
+      font-size: 0.98rem;
+      margin-top: 6px;
+      line-height: 1.45;
+    }
+
+    body.is-mobile .actions-card {
+      width: 92vw;
+      padding: 12px;
+    }
 
     body.is-mobile .profile-actions {
       flex-direction: column;
@@ -773,7 +925,8 @@
     }
 
     body.is-mobile .action-btn .logo {
-      width: 36px; height: 36px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       flex: 0 0 36px;
     }
@@ -792,9 +945,14 @@
       opacity: 0.04 !important;
     }
 
-    body.is-mobile .glow { animation: none !important; }
+    body.is-mobile .glow {
+      animation: none !important;
+    }
 
-    body.is-mobile .music-container { top: 20px; left: 20px; }
+    body.is-mobile .music-container {
+      top: 20px;
+      left: 20px;
+    }
 
     body.is-mobile .light {
       right: -12vmax;
@@ -804,9 +962,14 @@
       filter: blur(20px);
     }
 
-    body.is-mobile #copy-notification { width: 85%; justify-content: center; }
+    body.is-mobile #copy-notification {
+      width: 85%;
+      justify-content: center;
+    }
 
-    body.is-mobile .volume-row { display: none !important; }
+    body.is-mobile .volume-row {
+      display: none !important;
+    }
 
     body.is-mobile .track-controls {
       display: flex;
@@ -823,7 +986,10 @@
       padding: 10px 14px;
     }
 
-    body.is-mobile .progress-container { order: 2; flex: 1; }
+    body.is-mobile .progress-container {
+      order: 2;
+      flex: 1;
+    }
 
     body.is-mobile .more-menu {
       flex-direction: column;
@@ -831,7 +997,9 @@
       align-items: stretch;
     }
 
-    body.is-mobile .more-menu .action-btn { max-width: 100%; }
+    body.is-mobile .more-menu .action-btn {
+      max-width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -874,7 +1042,7 @@
           <svg class="music-icon" viewBox="0 0 24 24">
             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
           </svg>
-          <input type="range" class="volume-slider" id="volume-slider" max="100" value="15">
+          <input type="range" class="volume-slider" id="volume-slider" max="100" value="15"><!-- Ползунок громкости -->
         </div>
       </div>
     </div>
@@ -892,14 +1060,14 @@
     <div class="profile-card" role="region" aria-label="profile">
       <div class="profile-header">
         <label class="profile-avatar">
-          <img src="assets/Avatar_round.png" alt="Avatar">
+          <img src="assets/Avatar_round.png" alt="Avatar"><!-- Аватарка био -->
         </label>
         <div style="display: flex; flex-direction: column; flex: 1;">
-          <h2 class="profile-name">Kio</h2>
-          <p class="profile-subtext">Aka: KioSWCB, SWCB</p>
+          <h2 class="profile-name">Kio</h2><!-- Имя -->
+          <p class="profile-subtext">Aka: KioSWCB, SWCB</p><!-- Нижний текст -->
         </div>
       </div>
-      <p class="profile-bio">
+      <p class="profile-bio"><!-- Текст профиля -->
         Привет и добро пожаловать на мою страницу)
         <br>
         Я не знаю, что тут написать, напишу только то что мне 17 лет и я из Беларуси (не Белоруссии).
@@ -907,14 +1075,17 @@
     </div>
     <div class="actions-card" role="region" aria-label="actions">
       <div class="profile-actions">
+<!-- Discord -->
         <a class="action-btn discord-btn" href="#" id="discord-copy-btn" role="button">
           <span class="logo"><img src="assets/Discord_logo500x500.png" alt="Discord"></span>
           <span class="text">Discord</span>
         </a>
+<!-- Telegram -->
         <a class="action-btn telegram-btn" href="https://t.me/Kio_SWCB/" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo"><img src="assets/Telegram_logo500x500.png" alt="Telegram"></span>
           <span class="text">Telegram</span>
         </a>
+<!-- Steam -->
         <a class="action-btn steam-btn" href="https://steamcommunity.com/id/KioSWCB/" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo"><img src="assets/Steam_logo500x500.png" alt="Steam"></span>
           <span class="text">Steam</span>
@@ -929,18 +1100,22 @@
         </a>
       </div>
       <div class="more-menu" id="more-menu">
+<!-- Roblox -->
         <a class="action-btn roblox-btn" href="https://www.roblox.com/users/3421812576/profile" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo"><img src="assets/Roblox_logo500x500.png" alt="Roblox"></span>
           <span class="text">Roblox</span>
         </a>
+<!-- NameMC -->
         <a class="action-btn namemc-btn" href="https://ru.namemc.com/profile/KioSWCB" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo"><img src="assets/NameMC_logo500x500.png" alt="NameMC"></span>
           <span class="text">NameMC</span>
         </a>
+<!-- Toyhouse -->
         <a class="action-btn toyhouse-btn" href="https://toyhou.se/KioSWCB" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo"><img src="assets/Toyhouse_logo500x500.png" alt="Toyhouse"></span>
           <span class="text">Toyhouse</span>
         </a>
+<!-- TikTok -->
         <a class="action-btn tiktok-btn" href="https://www.tiktok.com/@kio_swcb" role="button" rel="noopener noreferrer" target="_blank">
           <span class="logo"><img src="assets/TikTok_logo500x500.png" alt="TikTok"></span>
           <span class="text">TikTok</span>
@@ -960,9 +1135,9 @@
 
     window.addEventListener('load', function() {
 
-      const isSnowEnabled = false;
+      const isSnowEnabled = false; // Вкл/Выкл снега
 
-      const userLang = navigator.language || navigator.userLanguage;
+      const userLang = navigator.language || navigator.userLanguage; // Перевод
       if (!/^(ru|uk|be)/i.test(userLang)) {
         document.documentElement.lang = "en";
         document.querySelector('.start-text').textContent = "Click to continue...";
@@ -979,7 +1154,7 @@
         };
       }
 
-      const preloader = document.getElementById('preloader');
+      const preloader = document.getElementById('preloader'); // Загрузка
       const startOverlay = document.getElementById('start-overlay');
       startOverlay.classList.add('visible');
       setTimeout(function() {
@@ -990,14 +1165,14 @@
         }, 500);
       }, 500);
 
-      const moreBtn = document.getElementById('more-btn');
+      const moreBtn = document.getElementById('more-btn'); // Меню ещё
       const moreMenu = document.getElementById('more-menu');
       moreBtn.addEventListener('click', function(e) {
         e.preventDefault();
         moreMenu.classList.toggle('show');
       });
 
-      function createSnow() {
+      function createSnow() { // Снег
         const snowContainer = document.getElementById('snow-container');
         if (!isSnowEnabled || !snowContainer) return;
         snowContainer.innerHTML = '';
@@ -1035,12 +1210,12 @@
         if (snowContainer) snowContainer.style.display = 'none';
       }
 
-      const discordBtn = document.getElementById('discord-copy-btn');
+      const discordBtn = document.getElementById('discord-copy-btn'); // Кнопка дискорда
       const notification = document.getElementById('copy-notification');
       let timeoutId;
       discordBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        navigator.clipboard.writeText('kioswcb').then(function() {
+        navigator.clipboard.writeText('kioswcb').then(function() { // Юзер дискорда
           notification.classList.add('show');
           if (timeoutId) clearTimeout(timeoutId);
           timeoutId = setTimeout(function() {
@@ -1052,7 +1227,7 @@
         });
       });
 
-      const titles = ["Kio", "Hello world!"];
+      const titles = ["Kio", "Hello world!"]; // Изменение title
       let currentTitleIndex = 0;
       let charIndex = titles[0].length;
       let isDeleting = true;
@@ -1069,18 +1244,18 @@
           charIndex++;
           if (charIndex > currentWord.length) {
             isDeleting = true;
-            setTimeout(updateTitle, 10000);
+            setTimeout(updateTitle, 10000); // Пауза когда слово полностью написано
             return;
           }
         } else {
           charIndex--;
         }
-        let speed = isDeleting ? 100 : 200;
+        let speed = isDeleting ? 100 : 200; // Скорость печати/стирания
         setTimeout(updateTitle, speed);
       }
-      setTimeout(updateTitle, 10000);
+      setTimeout(updateTitle, 10000); // Через сколько начнёт стирать после загрузки
 
-      const audio = document.getElementById('bg-music');
+      const audio = document.getElementById('bg-music'); // Музыка
       const toggleBtn = document.getElementById('toggle-player');
       const panel = document.getElementById('music-panel');
       const playBtn = document.getElementById('play-btn');
@@ -1090,7 +1265,7 @@
       const volumeSlider = document.getElementById('volume-slider');
       let isPlaying = false;
       let fadeInterval;
-      const targetVolume = 0.15;
+      const targetVolume = 0.15; // Начальная громокость
       audio.volume = 0;
       toggleBtn.addEventListener('click', () => {
         panel.classList.toggle('active');
@@ -1098,7 +1273,7 @@
       function fadeAudio(targetVol, duration = 1500) {
         clearInterval(fadeInterval);
         const startVol = audio.volume;
-        const stepTime = 50;
+        const stepTime = 50; 
         const steps = duration / stepTime;
         const volStep = (targetVol - startVol) / steps;
         let currentStep = 0;
@@ -1133,7 +1308,7 @@
           iconPlay.classList.add('icon-hidden');
           iconPause.classList.remove('icon-hidden');
           iconPause.classList.add('icon-visible');
-        } else {
+        } else { // Светлая память моему коту Шишке
           iconPause.classList.remove('icon-visible');
           iconPause.classList.add('icon-hidden');
           iconPlay.classList.remove('icon-hidden');
@@ -1184,17 +1359,21 @@
         updatePlayIcon(true);
       });
 
-      document.addEventListener('visibilitychange', () => {
+      document.addEventListener('visibilitychange', () => { // Остановка анимаций и музыки
         if (document.hidden) {
           document.body.classList.add('is-hidden');
-          if (!audio.paused) fadeAudio(0);
+          if (!audio.paused) {
+            fadeAudio(0); 
+          }
         } else {
           document.body.classList.remove('is-hidden');
-          if (isPlaying) fadeAudio(volumeSlider.value / 100);
+          if (isPlaying) {
+            fadeAudio(volumeSlider.value / 100);
+          }
         }
       });
 
-      const waveSvg = document.getElementById('wave-svg');
+      const waveSvg = document.getElementById('wave-svg'); // Анимация волны в плеере
       const wavePlayed = document.getElementById('wave-played');
       const waveUnplayed = document.getElementById('wave-unplayed');
       let waveAmp = 0;
@@ -1208,7 +1387,7 @@
         if (audio.paused && waveAmp > 0) waveAmp -= 0.05 * dt;
         if (waveAmp < 0) waveAmp = 0;
         if (waveAmp > 1) waveAmp = 1;
-        if (waveAmp > 0) wavePhase -= 0.07 * dt;
+        if (waveAmp > 0) wavePhase -= 0.07 * dt; // Скорость волны
         const width = waveSvg.clientWidth || 228;
         const height = waveSvg.clientHeight || 24;
         const midY = height / 2;
