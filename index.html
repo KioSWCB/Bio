@@ -3,11 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <title>Kio</title>
-  <link rel="icon" type="image/png" href="Avatar_round.png">
+  <link rel="icon" type="image/png" href="assets/Avatar_round.png">
+  <link rel="preload" href="fonts/Rubik-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
   <script data-goatcounter="https://counter.kioharuka-4546b.workers.dev" async src="https://counter.kioharuka-4546b.workers.dev/count.js"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0d0d0d" />
   <style>
+    @font-face {
+      font-family: 'Rubik';
+      src: url('fonts/Rubik-VariableFont_wght.ttf') format('truetype');
+      font-weight: 300 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg-dark: #0d0d0d;
       --stripe-size: 40px;
@@ -74,7 +83,7 @@
     }
 
     .start-text {
-      font-family: "Inter", "Segoe UI", system-ui, sans-serif; 
+      font-family: "Rubik", "Segoe UI", system-ui, sans-serif;
       font-size: 1.2rem;
       font-weight: 400;
       color: #fff;
@@ -120,7 +129,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      font-family: "Rubik", "Segoe UI", system-ui, sans-serif;
       background: var(--bg-dark);
       color: #f2f2f2;
       overflow-x: hidden;
@@ -188,54 +197,28 @@
     }
 
     @keyframes wave-vert {
-      0% {
-        transform: translate3d(0, 0, 0) scaleY(1);
-      }
-      40% {
-        transform: translate3d(0, -34px, 0) scaleY(1.6);
-      }
-      60% {
-        transform: translate3d(0, -28px, 0) scaleY(1.08);
-      }
-      100% {
-        transform: translate3d(0, 0, 0) scaleY(1);
-      }
+      0%   { transform: translate3d(0, 0, 0) scaleY(1); }
+      40%  { transform: translate3d(0, -34px, 0) scaleY(1.6); }
+      60%  { transform: translate3d(0, -28px, 0) scaleY(1.08); }
+      100% { transform: translate3d(0, 0, 0) scaleY(1); }
     }
 
     @keyframes wave-vert-soft {
-      0% {
-        transform: translate3d(0, 0, 0) scaleY(1);
-      }
-      50% {
-        transform: translate3d(0, -20px, 0) scaleY(1.05);
-      }
-      100% {
-        transform: translate3d(0, 0, 0) scaleY(1);
-      }
+      0%   { transform: translate3d(0, 0, 0) scaleY(1); }
+      50%  { transform: translate3d(0, -20px, 0) scaleY(1.05); }
+      100% { transform: translate3d(0, 0, 0) scaleY(1); }
     }
 
     @keyframes wave-drift {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 60% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 60% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     @keyframes wave-drift-rev {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: -50% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: -50% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .light {
@@ -265,12 +248,8 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translate(var(--start-x), -20px) scale(var(--scale));
-      }
-      100% {
-        transform: translate(var(--end-x), 100vh) scale(var(--scale));
-      }
+      0%   { transform: translate(var(--start-x), -20px) scale(var(--scale)); }
+      100% { transform: translate(var(--end-x), 100vh) scale(var(--scale)); }
     }
 
     #snow-container {
@@ -308,14 +287,8 @@
     }
 
     @keyframes cardEnter {
-      0% {
-        opacity: 0;
-        transform: translateY(var(--card-offset)) scale(0.96);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      0%   { opacity: 0; transform: translateY(var(--card-offset)) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .profile-header {
@@ -381,20 +354,13 @@
       will-change: transform, opacity;
       display: flex;
       flex-direction: column;
-      gap: 10px;
       box-sizing: border-box;
       margin-top: 12px;
     }
 
     @keyframes actionsEnter {
-      0% {
-        opacity: 0;
-        transform: translateY(18px) scale(0.98);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      0%   { opacity: 0; transform: translateY(18px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .profile-actions {
@@ -944,7 +910,7 @@
       </div>
     </div>
   </div>
-  <audio id="bg-music" src="song.mp3" loop></audio>
+  <audio id="bg-music" src="assets/song.mp3" loop></audio>
   <div class="bg"></div>
   <div class="light"></div>
   <div id="snow-container"></div>
@@ -952,7 +918,7 @@
     <div class="profile-card" role="region" aria-label="profile">
       <div class="profile-header">
         <label class="profile-avatar">
-          <img src="Avatar_round.png" alt="Avatar"><!-- Аватарка био -->
+          <img src="assets/Avatar_round.png" alt="Avatar"><!-- Аватарка био -->
         </label>
         <div style="display: flex; flex-direction: column; flex: 1;">
           <h2 class="profile-name">Kio</h2><!-- Имя -->
@@ -969,17 +935,17 @@
       <div class="profile-actions">
 <!-- Discord -->
         <a class="action-btn discord-btn" href="#" id="discord-copy-btn" role="button">
-          <span class="logo"><img src="Discord_logo500x500.png" alt="Discord"></span>
+          <span class="logo"><img src="assets/Discord_logo500x500.png" alt="Discord"></span>
           <span class="text">Discord</span>
         </a>
 <!-- Telegram -->
         <a class="action-btn telegram-btn" href="https://t.me/Kio_SWCB/" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo"><img src="Telegram_logo500x500.png" alt="Telegram"></span>
+          <span class="logo"><img src="assets/Telegram_logo500x500.png" alt="Telegram"></span>
           <span class="text">Telegram</span>
         </a>
 <!-- Steam -->
         <a class="action-btn steam-btn" href="https://steamcommunity.com/id/KioSWCB/" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo"><img src="Steam_logo500x500.png" alt="Steam"></span>
+          <span class="logo"><img src="assets/Steam_logo500x500.png" alt="Steam"></span>
           <span class="text">Steam</span>
         </a>
         <a class="action-btn more-btn" id="more-btn" role="button">
@@ -994,22 +960,22 @@
       <div class="more-menu" id="more-menu">
 <!-- Roblox -->
         <a class="action-btn roblox-btn" href="https://www.roblox.com/users/3421812576/profile" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo"><img src="Roblox_logo500x500.png" alt="Roblox"></span>
+          <span class="logo"><img src="assets/Roblox_logo500x500.png" alt="Roblox"></span>
           <span class="text">Roblox</span>
         </a>
 <!-- NameMC -->
         <a class="action-btn namemc-btn" href="https://ru.namemc.com/profile/KioSWCB" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo"><img src="NameMC_logo500x500.png" alt="NameMC"></span>
+          <span class="logo"><img src="assets/NameMC_logo500x500.png" alt="NameMC"></span>
           <span class="text">NameMC</span>
         </a>
 <!-- Toyhouse -->
         <a class="action-btn toyhouse-btn" href="https://toyhou.se/KioSWCB" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo"><img src="Toyhouse_logo500x500.png" alt="Toyhouse"></span>
+          <span class="logo"><img src="assets/Toyhouse_logo500x500.png" alt="Toyhouse"></span>
           <span class="text">Toyhouse</span>
         </a>
 <!-- TikTok -->
         <a class="action-btn tiktok-btn" href="https://www.tiktok.com/@kio_swcb" role="button" rel="noopener noreferrer" target="_blank">
-          <span class="logo"><img src="TikTok_logo500x500.png" alt="TikTok"></span>
+          <span class="logo"><img src="assets/TikTok_logo500x500.png" alt="TikTok"></span>
           <span class="text">TikTok</span>
         </a>
       </div>
@@ -1313,4 +1279,3 @@
   </script>
 </body>
 </html>
-<!-- v3 -->
