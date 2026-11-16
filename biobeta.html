@@ -253,22 +253,22 @@
       will-change: transform;
     }
 
-    .glow-indigo {
-      background: radial-gradient(circle 65vmax at 35% 35%, rgba(99, 102, 241, 0.26), transparent 70%);
-      animation: drift-indigo 18s ease-in-out infinite alternate;
+    .glow-first {
+      background: radial-gradient(circle 65vmax at 35% 35%, rgba(41, 141, 255, 0.22), transparent 70%);
+      animation: drift-first 18s ease-in-out infinite alternate;
     }
 
-    .glow-purple {
-      background: radial-gradient(circle 60vmax at 65% 55%, rgba(168, 85, 247, 0.22), transparent 70%);
-      animation: drift-purple 22s ease-in-out infinite alternate;
+    .glow-second {
+      background: radial-gradient(circle 60vmax at 65% 55%, rgba(14, 15, 45, 0.26), transparent 70%);
+      animation: drift-second 22s ease-in-out infinite alternate;
     }
 
-    .glow-blue {
-      background: radial-gradient(circle 70vmax at 50% 75%, rgba(59, 130, 246, 0.18), transparent 70%);
-      animation: drift-blue 26s ease-in-out infinite alternate;
+    .glow-third {
+      background: radial-gradient(circle 70vmax at 50% 75%, rgba(117, 44, 255, 0.18), transparent 70%);
+      animation: drift-third 26s ease-in-out infinite alternate;
     }
 
-    @keyframes drift-indigo {
+    @keyframes drift-first {
       0% {
         transform: translate(-15%, -12%);
       }
@@ -280,7 +280,7 @@
       }
     }
 
-    @keyframes drift-purple {
+    @keyframes drift-second {
       0% {
         transform: translate(20%, -10%);
       }
@@ -292,7 +292,7 @@
       }
     }
 
-    @keyframes drift-blue {
+    @keyframes drift-third {
       0% {
         transform: translate(-18%, 20%);
       }
@@ -1042,16 +1042,16 @@
           <svg class="music-icon" viewBox="0 0 24 24">
             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
           </svg>
-          <input type="range" class="volume-slider" id="volume-slider" max="100" value="15"><!-- Ползунок громкости -->
+          <input type="range" class="volume-slider" id="volume-slider" max="100" value="0">
         </div>
       </div>
     </div>
   </div>
   <audio id="bg-music" src="assets/song.mp3" loop></audio>
   <div class="bg"></div>
-  <div class="glow glow-indigo"></div>
-  <div class="glow glow-purple"></div>
-  <div class="glow glow-blue"></div>
+  <div class="glow glow-first"></div>
+  <div class="glow glow-second"></div>
+  <div class="glow glow-third"></div>
   <div class="grain"></div>
   <div class="vignette"></div>
   <div class="light"></div>
@@ -1064,14 +1064,10 @@
         </label>
         <div style="display: flex; flex-direction: column; flex: 1;">
           <h2 class="profile-name">Kio</h2><!-- Имя -->
-          <p class="profile-subtext">Aka: KioSWCB, SWCB</p><!-- Нижний текст -->
+          <p class="profile-subtext">Aka: KioSWCB, SWCB</p><!-- Текст под именем -->
         </div>
       </div>
-      <p class="profile-bio"><!-- Текст профиля -->
-        Привет и добро пожаловать на мою страницу)
-        <br>
-        Я не знаю, что тут написать, напишу только то что мне 17 лет и я из Беларуси (не Белоруссии).
-      </p>
+      <p class="profile-bio">Привет и добро пожаловать на мою страницу)<br>Я не знаю, что тут написать, напишу только то что мне 17 лет и я из Беларуси.</p><!-- Текст профиля -->
     </div>
     <div class="actions-card" role="region" aria-label="actions">
       <div class="profile-actions">
@@ -1138,20 +1134,15 @@
       const isSnowEnabled = false; // Вкл/Выкл снега
 
       const userLang = navigator.language || navigator.userLanguage; // Перевод
+      const copyErrorMsg = /^(ru|uk|be)/i.test(userLang)
+        ? 'Не удалось скопировать.'
+        : 'Failed to copy.';
       if (!/^(ru|uk|be)/i.test(userLang)) {
         document.documentElement.lang = "en";
         document.querySelector('.start-text').textContent = "Click to continue...";
         document.querySelector('.profile-bio').innerHTML = "Hello and welcome to my page)<br>I don't know what to write here, I'll just write that I'm 17 years old and I'm from Belarus.";
         document.querySelector('#copy-notification span').textContent = "Username copied";
         document.querySelector('#more-btn .text').textContent = "More";
-        const originalAlert = window.alert;
-        window.alert = function(msg) {
-          if (msg === 'Не удалось скопировать.') {
-            originalAlert('Failed to copy.');
-          } else {
-            originalAlert(msg);
-          }
-        };
       }
 
       const preloader = document.getElementById('preloader'); // Загрузка
@@ -1223,7 +1214,7 @@
           }, 2500);
         }).catch(function(err) {
           console.error('Ошибка копирования: ', err);
-          alert('Не удалось скопировать');
+          alert(copyErrorMsg);
         });
       });
 
@@ -1263,44 +1254,29 @@
       const iconPause = document.getElementById('icon-pause');
       const seekSlider = document.getElementById('seek-slider');
       const volumeSlider = document.getElementById('volume-slider');
+      if (!audio || !playBtn || !iconPlay || !iconPause || !seekSlider || !volumeSlider || !toggleBtn || !panel || !startOverlay) return;
+      const STORAGE_KEY = 'kio:player';
+      const DEFAULT_VOLUME = 0.15;
+      const IS_MOBILE = document.body.classList.contains('is-mobile');
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (e) { saved = null; }
+      const targetVolume = IS_MOBILE
+        ? 1
+        : (saved && Number.isFinite(saved.volume))
+          ? Math.min(1, Math.max(0, saved.volume))
+          : DEFAULT_VOLUME;
+      volumeSlider.value = Math.round(targetVolume * 100);
+      let userWantsPlay = saved ? saved.playing !== false : true;
       let isPlaying = false;
       let fadeInterval;
-      const targetVolume = 0.15; // Начальная громокость
-      audio.volume = 0;
-      toggleBtn.addEventListener('click', () => {
-        panel.classList.toggle('active');
-      });
-      function fadeAudio(targetVol, duration = 1500) {
-        clearInterval(fadeInterval);
-        const startVol = audio.volume;
-        const stepTime = 50; 
-        const steps = duration / stepTime;
-        const volStep = (targetVol - startVol) / steps;
-        let currentStep = 0;
-        if (targetVol > 0 && audio.paused) {
-          const playPromise = audio.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(error => {
-              console.log("Автовосплей заблокирован или ожидает взаимодействия");
-              isPlaying = false;
-              updatePlayIcon(false);
-            });
-          }
-        }
-        fadeInterval = setInterval(() => {
-          currentStep++;
-          let newVol = startVol + (volStep * currentStep);
-          if (newVol < 0) newVol = 0;
-          if (newVol > 1) newVol = 1;
-          audio.volume = newVol;
-          if (currentStep >= steps) {
-            clearInterval(fadeInterval);
-            audio.volume = targetVol;
-            if (targetVol === 0) {
-              audio.pause();
-            }
-          }
-        }, stepTime);
+      let rafId = 0;
+      audio.volume = IS_MOBILE ? 1 : 0;
+      function persistPlayer() {
+        try {
+          const data = { playing: userWantsPlay };
+          if (!IS_MOBILE) data.volume = volumeSlider.value / 100;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (e) { }
       }
       function updatePlayIcon(playing) {
         if (playing) {
@@ -1315,32 +1291,95 @@
           iconPlay.classList.add('icon-visible');
         }
       }
+      function fadeAudio(targetVol, duration = 1500) {
+        clearInterval(fadeInterval);
+        if (audio.paused && targetVol === 0) return;
+        if (IS_MOBILE) {
+          if (targetVol > 0 && audio.paused) {
+            audio.play().catch(() => {
+              updatePlayIcon(false);
+            });
+          } else if (targetVol === 0 && !audio.paused) {
+            audio.pause();
+          }
+          return;
+        }
+        const startVol = audio.volume;
+        const stepTime = 50;
+        const steps = duration / stepTime;
+        const volStep = (targetVol - startVol) / steps;
+        let currentStep = 0;
+        if (targetVol > 0 && audio.paused) {
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              console.warn("Autoplay заблокирован или ожидает взаимодействия");
+              updatePlayIcon(false);
+            });
+          }
+        }
+        fadeInterval = setInterval(() => {
+          currentStep++;
+          let newVol = startVol + (volStep * currentStep);
+          if (newVol < 0) newVol = 0;
+          if (newVol > 1) newVol = 1;
+          audio.volume = newVol;
+          if (currentStep >= steps) {
+            clearInterval(fadeInterval);
+            audio.volume = targetVol;
+            if (targetVol === 0 && !audio.paused && (!userWantsPlay || document.hidden)) {
+              audio.pause();
+            }
+          }
+        }, stepTime);
+      }
+      audio.addEventListener('play', () => {
+        isPlaying = true;
+        updatePlayIcon(true);
+      });
+      audio.addEventListener('pause', () => {
+        isPlaying = false;
+        updatePlayIcon(false);
+      });
+      volumeSlider.addEventListener('change', persistPlayer);
+      window.addEventListener('pagehide', persistPlayer);
+      toggleBtn.addEventListener('click', () => {
+        panel.classList.toggle('active');
+      });
       playBtn.addEventListener('click', () => {
-        if (!isPlaying) {
+        if (userWantsPlay && !isPlaying) {
           fadeAudio(volumeSlider.value / 100);
-          isPlaying = true;
-          updatePlayIcon(true);
+          return;
+        }
+        userWantsPlay = !userWantsPlay;
+        updatePlayIcon(userWantsPlay);
+        if (userWantsPlay) {
+          fadeAudio(volumeSlider.value / 100);
         } else {
           fadeAudio(0);
-          isPlaying = false;
-          updatePlayIcon(false);
         }
+        persistPlayer();
       });
+      let isSeeking = false;
+      seekSlider.addEventListener('pointerdown', () => { isSeeking = true; });
+      seekSlider.addEventListener('pointerup', () => { isSeeking = false; });
+      seekSlider.addEventListener('pointercancel', () => { isSeeking = false; });
+      seekSlider.addEventListener('change', () => { isSeeking = false; });
+      window.addEventListener('pointerup', () => { isSeeking = false; });
       volumeSlider.addEventListener('input', (e) => {
-        if (!audio.paused) {
-          audio.volume = e.target.value / 100;
-        }
+        if (IS_MOBILE) return;
+        clearInterval(fadeInterval);
+        audio.volume = e.target.value / 100;
       });
       audio.addEventListener('timeupdate', () => {
-        if (!isNaN(audio.duration)) {
-          const val = (audio.currentTime / audio.duration) * 100;
-          seekSlider.value = val;
+        if (isSeeking) return;
+        if (Number.isFinite(audio.duration) && audio.duration > 0) {
+          seekSlider.value = (audio.currentTime / audio.duration) * 100;
         }
       });
       seekSlider.addEventListener('input', (e) => {
-        if (!isNaN(audio.duration)) {
-          const time = (audio.duration / 100) * e.target.value;
-          audio.currentTime = time;
+        if (Number.isFinite(audio.duration) && audio.duration > 0) {
+          audio.currentTime = (audio.duration / 100) * e.target.value;
         }
       });
       document.addEventListener('click', function(event) {
@@ -1354,22 +1393,30 @@
         startOverlay.classList.remove('visible');
         setTimeout(() => { startOverlay.style.display = 'none'; }, 600);
         document.body.classList.add('started');
-        fadeAudio(targetVolume);
-        isPlaying = true;
-        updatePlayIcon(true);
+        if (userWantsPlay) {
+          updatePlayIcon(true);
+          fadeAudio(targetVolume);
+        } else {
+          updatePlayIcon(false);
+        }
       });
 
       document.addEventListener('visibilitychange', () => { // Остановка анимаций и музыки
         if (document.hidden) {
           document.body.classList.add('is-hidden');
+          cancelAnimationFrame(rafId);
           if (!audio.paused) {
-            fadeAudio(0); 
+            fadeAudio(0);
           }
         } else {
           document.body.classList.remove('is-hidden');
-          if (isPlaying) {
-            fadeAudio(volumeSlider.value / 100);
+          if (userWantsPlay) {
+            const target = volumeSlider.value / 100;
+            if (audio.paused || audio.volume < target) {
+              fadeAudio(target);
+            }
           }
+          rafId = requestAnimationFrame(animateWave);
         }
       });
 
@@ -1414,9 +1461,9 @@
         waveUnplayed.setAttribute('y1', midY);
         waveUnplayed.setAttribute('x2', width);
         waveUnplayed.setAttribute('y2', midY);
-        requestAnimationFrame(animateWave);
+        rafId = requestAnimationFrame(animateWave);
       }
-      animateWave();
+      rafId = requestAnimationFrame(animateWave);
     });
   </script>
 </body>
