@@ -67,6 +67,7 @@
       height: 100%;
       background: rgba(13, 13, 13, 0.8);
       backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       z-index: 8000;
       display: flex;
       align-items: center;
@@ -76,7 +77,7 @@
       visibility: hidden;
       transition: opacity 0.6s ease, visibility 0.6s;
     }
-    
+
     #start-overlay.visible {
       opacity: 1;
       visibility: visible;
@@ -88,8 +89,6 @@
       font-weight: 400;
       color: #fff;
       line-height: 1.45;
-      letter-spacing: normal;
-      text-transform: none;
     }
 
     .spinner {
@@ -109,7 +108,7 @@
 
     .profile-card,
     .actions-card {
-      opacity: 0; 
+      opacity: 0;
       animation-play-state: paused !important;
     }
 
@@ -138,7 +137,6 @@
       -moz-osx-font-smoothing: grayscale;
       padding: 40px 20px;
       box-sizing: border-box;
-      transition: background 0.6s ease;
     }
 
     .main-bio {
@@ -153,9 +151,10 @@
 
     .bg {
       position: fixed;
-      inset: -6% -6%;
-      z-index: -2;
+      inset: -50vmax;
+      z-index: -6;
       pointer-events: none;
+      overflow: hidden;
       background: repeating-linear-gradient(
         -45deg,
         var(--bg-dark) 0px,
@@ -163,33 +162,32 @@
         #111 calc(var(--stripe-size) / 2),
         #111 var(--stripe-size)
       );
-      transform: translateZ(0); 
-      will-change: transform;
-      transition: opacity 0.6s ease;
+      transform: translateZ(0);
     }
 
     .bg::after,
     .bg::before {
       content: "";
       position: absolute;
-      inset: -18% -18%;
+      inset: -50vmax;
       pointer-events: none;
       mix-blend-mode: soft-light;
       backface-visibility: hidden;
       z-index: 0;
       transform: translateZ(0);
       will-change: transform, opacity, background-position;
+      background-repeat: no-repeat;
     }
 
     .bg::after {
-      background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 28%, rgba(255, 255, 255, var(--wave-strong)) 50%, rgba(255, 255, 255, 0) 72%);
+      background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0) 28%, rgba(255, 255, 255, var(--wave-strong)) 50%, rgba(255, 255, 255, 0) 72%);
       background-size: 200% 200%;
       animation: wave-vert var(--wave-time-main) ease-in-out infinite, wave-drift 18s linear infinite;
       opacity: 1;
     }
 
     .bg::before {
-      background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, var(--wave-soft-alpha)) 50%, rgba(255, 255, 255, 0) 80%);
+      background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, var(--wave-soft-alpha)) 50%, rgba(255, 255, 255, 0) 80%);
       filter: blur(10px);
       opacity: 0.95;
       background-size: 180% 180%;
@@ -197,28 +195,132 @@
     }
 
     @keyframes wave-vert {
-      0%   { transform: translate3d(0, 0, 0) scaleY(1); }
-      40%  { transform: translate3d(0, -34px, 0) scaleY(1.6); }
-      60%  { transform: translate3d(0, -28px, 0) scaleY(1.08); }
-      100% { transform: translate3d(0, 0, 0) scaleY(1); }
+      0% {
+        transform: translate3d(0, 0, 0) scaleY(1);
+      }
+      40% {
+        transform: translate3d(0, -34px, 0) scaleY(1.6);
+      }
+      60% {
+        transform: translate3d(0, -28px, 0) scaleY(1.08);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scaleY(1);
+      }
     }
 
     @keyframes wave-vert-soft {
-      0%   { transform: translate3d(0, 0, 0) scaleY(1); }
-      50%  { transform: translate3d(0, -20px, 0) scaleY(1.05); }
-      100% { transform: translate3d(0, 0, 0) scaleY(1); }
+      0% {
+        transform: translate3d(0, 0, 0) scaleY(1);
+      }
+      50% {
+        transform: translate3d(0, -20px, 0) scaleY(1.05);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scaleY(1);
+      }
     }
 
     @keyframes wave-drift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 60% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 60% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     @keyframes wave-drift-rev {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: -50% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: -50% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .glow {
+      position: fixed;
+      inset: -50vmax;
+      z-index: -5;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .glow-first {
+      background: radial-gradient(circle 65vmax at 35% 35%, rgba(41, 141, 255, 0.22), transparent 70%);
+      animation: drift-first 18s ease-in-out infinite alternate;
+    }
+
+    .glow-second {
+      background: radial-gradient(circle 60vmax at 65% 55%, rgba(14, 15, 45, 0.26), transparent 70%);
+      animation: drift-second 22s ease-in-out infinite alternate;
+    }
+
+    .glow-third {
+      background: radial-gradient(circle 70vmax at 50% 75%, rgba(117, 44, 255, 0.18), transparent 70%);
+      animation: drift-third 26s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift-first {
+      0% {
+        transform: translate(-15%, -12%);
+      }
+      50% {
+        transform: translate(5%, 8%);
+      }
+      100% {
+        transform: translate(20%, 18%);
+      }
+    }
+
+    @keyframes drift-second {
+      0% {
+        transform: translate(20%, -10%);
+      }
+      50% {
+        transform: translate(-3%, 12%);
+      }
+      100% {
+        transform: translate(-22%, 20%);
+      }
+    }
+
+    @keyframes drift-third {
+      0% {
+        transform: translate(-18%, 20%);
+      }
+      50% {
+        transform: translate(10%, -5%);
+      }
+      100% {
+        transform: translate(22%, -18%);
+      }
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      pointer-events: none;
+      opacity: 0.32;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+    }
+
+    .vignette {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 40%, transparent 32%, rgba(0, 0, 0, 0.5) 100%);
     }
 
     .light {
@@ -227,14 +329,11 @@
       bottom: -8vmax;
       width: 40vmax;
       height: 40vmax;
-      z-index: -1;
+      z-index: -2;
       pointer-events: none;
       background: radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.035) 28%, rgba(255, 255, 255, 0.02) 45%, rgba(255, 255, 255, 0) 70%);
       mix-blend-mode: soft-light;
       filter: blur(36px);
-      transform: translateZ(0);
-      will-change: none;
-      animation: none;
       opacity: 0.95;
       transition: opacity 0.6s ease;
     }
@@ -248,8 +347,12 @@
     }
 
     @keyframes fall {
-      0%   { transform: translate(var(--start-x), -20px) scale(var(--scale)); }
-      100% { transform: translate(var(--end-x), 100vh) scale(var(--scale)); }
+      0% {
+        transform: translate(var(--start-x), -20px) scale(var(--scale));
+      }
+      100% {
+        transform: translate(var(--end-x), 100vh) scale(var(--scale));
+      }
     }
 
     #snow-container {
@@ -266,12 +369,16 @@
 
     .profile-card {
       width: 698px;
-      height: auto;
       max-width: 92vw;
-      background: rgba(20, 20, 20, 0.92);
-      border-radius: 12px;
       padding: 28px;
-      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.6);
+      border-radius: 16px;
+      background: rgba(24, 24, 30, 0.55);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow:
+        0 10px 36px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
       text-align: left;
       position: relative;
       z-index: 1;
@@ -287,8 +394,14 @@
     }
 
     @keyframes cardEnter {
-      0%   { opacity: 0; transform: translateY(var(--card-offset)) scale(0.96); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
+      0% {
+        opacity: 0;
+        transform: translateY(var(--card-offset)) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .profile-header {
@@ -339,11 +452,16 @@
     .actions-card {
       width: 740px;
       max-width: 92vw;
-      margin: 0 auto;
-      background: rgba(18, 18, 18, 0.9);
-      border-radius: 12px;
+      margin: 12px auto 0;
       padding: 12px 16px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+      border-radius: 16px;
+      background: rgba(22, 22, 28, 0.5);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
       text-align: center;
       position: relative;
       z-index: 1;
@@ -355,12 +473,17 @@
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-      margin-top: 12px;
     }
 
     @keyframes actionsEnter {
-      0%   { opacity: 0; transform: translateY(18px) scale(0.98); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
+      0% {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .profile-actions {
@@ -379,12 +502,13 @@
       align-items: center;
       gap: 10px;
       padding: 8px 12px;
-      border-radius: 8px;
-      background: #1b1b1b;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.04);
       color: #f2f2f2;
       text-decoration: none;
       font-weight: 600;
-      transition: background .18s ease, transform .12s ease;
+      transition: background .18s ease, transform .12s ease, border-color .18s ease;
       min-width: 130px;
       justify-content: center;
       box-sizing: border-box;
@@ -394,16 +518,17 @@
 
     @media (hover: hover) {
       .action-btn:hover {
-        background: #2a2a2a;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.08);
         transform: translateY(-2px);
       }
     }
 
     .action-btn:active {
-      background: #333;
+      background: rgba(255, 255, 255, 0.14);
       transform: scale(0.98);
       transition: 0.1s;
-    }    
+    }
 
     .action-btn .logo {
       width: 24px;
@@ -411,7 +536,7 @@
       border-radius: 50%;
       overflow: hidden;
       flex: 0 0 24px;
-      background: #111;
+      background: rgba(0, 0, 0, 0.35);
       display: inline-block;
     }
 
@@ -449,7 +574,7 @@
       pointer-events: auto;
       padding: 6px 4px;
     }
-    
+
     .more-menu .action-btn {
       flex: 1 1 calc(25% - 6px);
     }
@@ -460,17 +585,20 @@
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       z-index: 10000;
-      background: rgba(20, 20, 20, 0.92);
-      border-radius: 12px;
-      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.6);
+      background: rgba(22, 22, 28, 0.6);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.5);
       color: #f2f2f2;
-      padding: 16px 24px; 
+      padding: 16px 24px;
       font-size: 0.95rem;
       font-weight: 500;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.4s cubic-bezier(.16, .84, .24, 1), 
-                  transform 0.4s cubic-bezier(.16, .84, .24, 1), 
+      transition: opacity 0.4s cubic-bezier(.16, .84, .24, 1),
+                  transform 0.4s cubic-bezier(.16, .84, .24, 1),
                   visibility 0.4s;
       display: flex;
       align-items: center;
@@ -484,7 +612,7 @@
     }
 
     .done-icon {
-      width: 20px; 
+      width: 20px;
       height: 20px;
       fill: #4caf50;
     }
@@ -513,10 +641,12 @@
     .music-btn {
       width: 48px;
       height: 48px;
-      border-radius: 12px;
-      background: rgba(20, 20, 20, 0.92);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      border: none;
+      border-radius: 14px;
+      background: rgba(22, 22, 28, 0.6);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -526,7 +656,7 @@
     }
 
     .music-btn:hover {
-      background: #2a2a2a;
+      background: rgba(255, 255, 255, 0.08);
       transform: scale(1.05);
     }
 
@@ -538,10 +668,13 @@
 
     .music-panel {
       width: 260px;
-      background: rgba(20, 20, 20, 0.95);
-      border-radius: 12px;
+      background: rgba(20, 20, 26, 0.7);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
       padding: 16px;
-      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.5);
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -685,7 +818,7 @@
 
     #wave-played {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.8);
+      stroke: rgba(255, 255, 255, 0.85);
       stroke-width: 4px;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -710,13 +843,15 @@
 
     body.is-hidden .bg::after,
     body.is-hidden .bg::before,
+    body.is-hidden .glow,
     body.is-hidden .snow-flake {
       animation-play-state: paused !important;
     }
 
     @media (prefers-reduced-motion: reduce) {
       .bg::after,
-      .bg::before {
+      .bg::before,
+      .glow {
         animation: none;
       }
       .profile-card,
@@ -729,11 +864,9 @@
 
     body.is-mobile .profile-card {
       width: 92vw;
-      height: auto;
       padding: 18px;
       flex-direction: column;
       align-items: center;
-      text-align: left;
       gap: 12px;
     }
 
@@ -810,6 +943,10 @@
       filter: none !important;
       mix-blend-mode: normal !important;
       opacity: 0.04 !important;
+    }
+
+    body.is-mobile .glow {
+      animation: none !important;
     }
 
     body.is-mobile .music-container {
@@ -905,13 +1042,18 @@
           <svg class="music-icon" viewBox="0 0 24 24">
             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
           </svg>
-          <input type="range" class="volume-slider" id="volume-slider" max="100" value="15"> <!-- Ползунок громкости -->
+          <input type="range" class="volume-slider" id="volume-slider" max="100" value="0">
         </div>
       </div>
     </div>
   </div>
   <audio id="bg-music" src="assets/song.mp3" loop></audio>
   <div class="bg"></div>
+  <div class="glow glow-first"></div>
+  <div class="glow glow-second"></div>
+  <div class="glow glow-third"></div>
+  <div class="grain"></div>
+  <div class="vignette"></div>
   <div class="light"></div>
   <div id="snow-container"></div>
   <div class="main-bio">
@@ -922,14 +1064,10 @@
         </label>
         <div style="display: flex; flex-direction: column; flex: 1;">
           <h2 class="profile-name">Kio</h2><!-- Имя -->
-          <p class="profile-subtext">Aka: KioSWCB, SWCB</p><!-- Нижний текст -->
+          <p class="profile-subtext">Aka: KioSWCB, SWCB</p><!-- Текст под именем -->
         </div>
       </div>
-      <p class="profile-bio"><!-- Текст профиля -->
-        Привет и добро пожаловать на мою страницу)
-        <br>
-        Я не знаю, что тут написать, напишу только то что мне 17 лет и я из Беларуси (не Белоруссии).
-      </p>
+      <p class="profile-bio">Привет и добро пожаловать на мою страницу)<br>Я не знаю, что тут написать, напишу только то что мне 17 лет и я из Беларуси.</p><!-- Текст профиля -->
     </div>
     <div class="actions-card" role="region" aria-label="actions">
       <div class="profile-actions">
@@ -996,20 +1134,15 @@
       const isSnowEnabled = false; // Вкл/Выкл снега
 
       const userLang = navigator.language || navigator.userLanguage; // Перевод
+      const copyErrorMsg = /^(ru|uk|be)/i.test(userLang)
+        ? 'Не удалось скопировать.'
+        : 'Failed to copy.';
       if (!/^(ru|uk|be)/i.test(userLang)) {
         document.documentElement.lang = "en";
         document.querySelector('.start-text').textContent = "Click to continue...";
         document.querySelector('.profile-bio').innerHTML = "Hello and welcome to my page)<br>I don't know what to write here, I'll just write that I'm 17 years old and I'm from Belarus.";
         document.querySelector('#copy-notification span').textContent = "Username copied";
         document.querySelector('#more-btn .text').textContent = "More";
-        const originalAlert = window.alert;
-        window.alert = function(msg) {
-          if (msg === 'Не удалось скопировать.') {
-            originalAlert('Failed to copy.');
-          } else {
-            originalAlert(msg);
-          }
-        };
       }
 
       const preloader = document.getElementById('preloader'); // Загрузка
@@ -1081,7 +1214,7 @@
           }, 2500);
         }).catch(function(err) {
           console.error('Ошибка копирования: ', err);
-          alert('Не удалось скопировать');
+          alert(copyErrorMsg);
         });
       });
 
@@ -1121,44 +1254,29 @@
       const iconPause = document.getElementById('icon-pause');
       const seekSlider = document.getElementById('seek-slider');
       const volumeSlider = document.getElementById('volume-slider');
+      if (!audio || !playBtn || !iconPlay || !iconPause || !seekSlider || !volumeSlider || !toggleBtn || !panel || !startOverlay) return;
+      const STORAGE_KEY = 'kio:player';
+      const DEFAULT_VOLUME = 0.15;
+      const IS_MOBILE = document.body.classList.contains('is-mobile');
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (e) { saved = null; }
+      const targetVolume = IS_MOBILE
+        ? 1
+        : (saved && Number.isFinite(saved.volume))
+          ? Math.min(1, Math.max(0, saved.volume))
+          : DEFAULT_VOLUME;
+      volumeSlider.value = Math.round(targetVolume * 100);
+      let userWantsPlay = saved ? saved.playing !== false : true;
       let isPlaying = false;
       let fadeInterval;
-      const targetVolume = 0.15; // Начальная громокость
-      audio.volume = 0;
-      toggleBtn.addEventListener('click', () => {
-        panel.classList.toggle('active');
-      });
-      function fadeAudio(targetVol, duration = 1500) {
-        clearInterval(fadeInterval);
-        const startVol = audio.volume;
-        const stepTime = 50; 
-        const steps = duration / stepTime;
-        const volStep = (targetVol - startVol) / steps;
-        let currentStep = 0;
-        if (targetVol > 0 && audio.paused) {
-          const playPromise = audio.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(error => {
-              console.log("Автовосплей заблокирован или ожидает взаимодействия");
-              isPlaying = false;
-              updatePlayIcon(false);
-            });
-          }
-        }
-        fadeInterval = setInterval(() => {
-          currentStep++;
-          let newVol = startVol + (volStep * currentStep);
-          if (newVol < 0) newVol = 0;
-          if (newVol > 1) newVol = 1;
-          audio.volume = newVol;
-          if (currentStep >= steps) {
-            clearInterval(fadeInterval);
-            audio.volume = targetVol;
-            if (targetVol === 0) {
-              audio.pause();
-            }
-          }
-        }, stepTime);
+      let rafId = 0;
+      audio.volume = IS_MOBILE ? 1 : 0;
+      function persistPlayer() {
+        try {
+          const data = { playing: userWantsPlay };
+          if (!IS_MOBILE) data.volume = volumeSlider.value / 100;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (e) { }
       }
       function updatePlayIcon(playing) {
         if (playing) {
@@ -1173,32 +1291,95 @@
           iconPlay.classList.add('icon-visible');
         }
       }
+      function fadeAudio(targetVol, duration = 1500) {
+        clearInterval(fadeInterval);
+        if (audio.paused && targetVol === 0) return;
+        if (IS_MOBILE) {
+          if (targetVol > 0 && audio.paused) {
+            audio.play().catch(() => {
+              updatePlayIcon(false);
+            });
+          } else if (targetVol === 0 && !audio.paused) {
+            audio.pause();
+          }
+          return;
+        }
+        const startVol = audio.volume;
+        const stepTime = 50;
+        const steps = duration / stepTime;
+        const volStep = (targetVol - startVol) / steps;
+        let currentStep = 0;
+        if (targetVol > 0 && audio.paused) {
+          const playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              console.warn("Autoplay заблокирован или ожидает взаимодействия");
+              updatePlayIcon(false);
+            });
+          }
+        }
+        fadeInterval = setInterval(() => {
+          currentStep++;
+          let newVol = startVol + (volStep * currentStep);
+          if (newVol < 0) newVol = 0;
+          if (newVol > 1) newVol = 1;
+          audio.volume = newVol;
+          if (currentStep >= steps) {
+            clearInterval(fadeInterval);
+            audio.volume = targetVol;
+            if (targetVol === 0 && !audio.paused && (!userWantsPlay || document.hidden)) {
+              audio.pause();
+            }
+          }
+        }, stepTime);
+      }
+      audio.addEventListener('play', () => {
+        isPlaying = true;
+        updatePlayIcon(true);
+      });
+      audio.addEventListener('pause', () => {
+        isPlaying = false;
+        updatePlayIcon(false);
+      });
+      volumeSlider.addEventListener('change', persistPlayer);
+      window.addEventListener('pagehide', persistPlayer);
+      toggleBtn.addEventListener('click', () => {
+        panel.classList.toggle('active');
+      });
       playBtn.addEventListener('click', () => {
-        if (!isPlaying) {
+        if (userWantsPlay && !isPlaying) {
           fadeAudio(volumeSlider.value / 100);
-          isPlaying = true;
-          updatePlayIcon(true);
+          return;
+        }
+        userWantsPlay = !userWantsPlay;
+        updatePlayIcon(userWantsPlay);
+        if (userWantsPlay) {
+          fadeAudio(volumeSlider.value / 100);
         } else {
           fadeAudio(0);
-          isPlaying = false;
-          updatePlayIcon(false);
         }
+        persistPlayer();
       });
+      let isSeeking = false;
+      seekSlider.addEventListener('pointerdown', () => { isSeeking = true; });
+      seekSlider.addEventListener('pointerup', () => { isSeeking = false; });
+      seekSlider.addEventListener('pointercancel', () => { isSeeking = false; });
+      seekSlider.addEventListener('change', () => { isSeeking = false; });
+      window.addEventListener('pointerup', () => { isSeeking = false; });
       volumeSlider.addEventListener('input', (e) => {
-        if (!audio.paused) {
-          audio.volume = e.target.value / 100;
-        }
+        if (IS_MOBILE) return;
+        clearInterval(fadeInterval);
+        audio.volume = e.target.value / 100;
       });
       audio.addEventListener('timeupdate', () => {
-        if (!isNaN(audio.duration)) {
-          const val = (audio.currentTime / audio.duration) * 100;
-          seekSlider.value = val;
+        if (isSeeking) return;
+        if (Number.isFinite(audio.duration) && audio.duration > 0) {
+          seekSlider.value = (audio.currentTime / audio.duration) * 100;
         }
       });
       seekSlider.addEventListener('input', (e) => {
-        if (!isNaN(audio.duration)) {
-          const time = (audio.duration / 100) * e.target.value;
-          audio.currentTime = time;
+        if (Number.isFinite(audio.duration) && audio.duration > 0) {
+          audio.currentTime = (audio.duration / 100) * e.target.value;
         }
       });
       document.addEventListener('click', function(event) {
@@ -1212,22 +1393,30 @@
         startOverlay.classList.remove('visible');
         setTimeout(() => { startOverlay.style.display = 'none'; }, 600);
         document.body.classList.add('started');
-        fadeAudio(targetVolume);
-        isPlaying = true;
-        updatePlayIcon(true);
+        if (userWantsPlay) {
+          updatePlayIcon(true);
+          fadeAudio(targetVolume);
+        } else {
+          updatePlayIcon(false);
+        }
       });
 
       document.addEventListener('visibilitychange', () => { // Остановка анимаций и музыки
         if (document.hidden) {
           document.body.classList.add('is-hidden');
+          cancelAnimationFrame(rafId);
           if (!audio.paused) {
-            fadeAudio(0); 
+            fadeAudio(0);
           }
         } else {
           document.body.classList.remove('is-hidden');
-          if (isPlaying) {
-            fadeAudio(volumeSlider.value / 100);
+          if (userWantsPlay) {
+            const target = volumeSlider.value / 100;
+            if (audio.paused || audio.volume < target) {
+              fadeAudio(target);
+            }
           }
+          rafId = requestAnimationFrame(animateWave);
         }
       });
 
@@ -1272,9 +1461,9 @@
         waveUnplayed.setAttribute('y1', midY);
         waveUnplayed.setAttribute('x2', width);
         waveUnplayed.setAttribute('y2', midY);
-        requestAnimationFrame(animateWave);
+        rafId = requestAnimationFrame(animateWave);
       }
-      animateWave();
+      rafId = requestAnimationFrame(animateWave);
     });
   </script>
 </body>
