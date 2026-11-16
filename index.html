@@ -1266,7 +1266,7 @@
           ? Math.min(1, Math.max(0, saved.volume))
           : DEFAULT_VOLUME;
       volumeSlider.value = Math.round(targetVolume * 100);
-      let userWantsPlay = saved ? saved.playing !== false : false;
+      let userWantsPlay = saved ? saved.playing !== false : true;
       let isPlaying = false;
       let fadeInterval;
       let rafId = 0;
